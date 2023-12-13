@@ -5,7 +5,7 @@
 Bu proje, Tobeto kursu kapsamında geliştirilen bir uygulamadır. NexGenRentProject, katmanlı mimari kullanılarak geliştirilmiş bir kiralama sistemini içermektedir. Proje, tüm veritabanı işlemleri, servis katmanı ve repository katmanını içermektedir.
 ## Güncellemeler
 
-**14.12.2023 Tarihli Güncellemeler:**
+**13.12.2023 Tarihli Güncellemeler:**
 
 - Sisteme Swagger desteği eklendi.
 
