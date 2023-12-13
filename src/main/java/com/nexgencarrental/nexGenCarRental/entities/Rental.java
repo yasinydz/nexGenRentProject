@@ -24,7 +24,7 @@ public class Rental {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "return_date") //?
+    @Column(name = "return_date")
     private LocalDate returnDate;
 
     @Column(name = "start_kilometer")
