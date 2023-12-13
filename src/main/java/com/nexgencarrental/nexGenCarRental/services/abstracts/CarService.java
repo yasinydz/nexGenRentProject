@@ -9,5 +9,4 @@ import java.util.List;
 public interface CarService {
     public List<GetCarListResponse> getAll();
     public void add(AddCarRequest addCarRequest);
-
 }

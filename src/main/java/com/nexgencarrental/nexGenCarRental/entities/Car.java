@@ -33,16 +33,13 @@ public class Car {
 
     @ManyToOne
     @JoinColumn(name ="model_id")
-    @JsonIgnore
     private Model model;
 
     @ManyToOne
     @JoinColumn(name ="color_id")
-    @JsonIgnore
     private Color color;
 
     @OneToMany(mappedBy = "car")
-    @JsonIgnore
     private List<Rental> rentals;
 
 }
