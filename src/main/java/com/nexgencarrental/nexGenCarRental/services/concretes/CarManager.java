@@ -8,6 +8,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
@@ -68,5 +69,19 @@ public class CarManager implements CarService {
         addCar.setColor(color);
 
         carRepository.save(addCar);
+    }
+
+    @Override
+    public String update(UpdateCarRequest updateCarRequest) {
+        Car updateCar = carRepository.findById(updateCarRequest.getId()).orElseThrow();
+        updateCar.setKilometer(updateCarRequest.getKilometer());
+        updateCar.setYear(updateCarRequest.getYear());
+        updateCar.setDailyPrice(updateCarRequest.getDailyPrice());
+        updateCar.setPlate(updateCarRequest.getPlate());
+        //updateCar.setModel(updateCarRequest.getModelId());
+        //updateCar.setColor(updateCarRequest.getColorId());
+        this.carRepository.save(updateCar);
+
+        return "Güncelleme Tamamlandı.";
     }
 }
