@@ -78,8 +78,8 @@ public class CarManager implements CarService {
         updateCar.setYear(updateCarRequest.getYear());
         updateCar.setDailyPrice(updateCarRequest.getDailyPrice());
         updateCar.setPlate(updateCarRequest.getPlate());
-        updateCar.setModel(updateCarRequest.getModelId());
-        updateCar.setColor(updateCarRequest.getColorId());
+        //updateCar.setModel(updateCarRequest.getModelId());
+        //updateCar.setColor(updateCarRequest.getColorId());
         this.carRepository.save(updateCar);
 
         return "Güncelleme Tamamlandı.";

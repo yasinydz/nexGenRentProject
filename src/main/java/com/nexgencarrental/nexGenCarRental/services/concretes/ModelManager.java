@@ -4,6 +4,7 @@ import com.nexgencarrental.nexGenCarRental.entities.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,10 @@ public class ModelManager implements ModelService {
     @Override
     public Model getModelById(int id) {
         return modelRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public String updateModel(int id, UpdateModelRequest request) {
+        return null;
     }
 }
