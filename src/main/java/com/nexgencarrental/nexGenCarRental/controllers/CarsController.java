@@ -31,6 +31,11 @@ public class CarsController {
     public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
         this.carService.update(updateCarRequest);
     }
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable int id ) {
+        carService.delete(id);
+    }
+
 
 
 }

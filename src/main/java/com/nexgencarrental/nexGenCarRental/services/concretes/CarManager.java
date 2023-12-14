@@ -14,6 +14,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColo
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,13 @@ public class CarManager implements CarService {
         this.carRepository.save(updateCar);
     }
 
+    @Override
+    public void delete(int id) {
+        Car deleteCar = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+        carRepository.deleteById(id);
+
+    }
 
 
     //

@@ -12,4 +12,6 @@ public interface CarService {
     public void add(AddCarRequest addCarRequest);
 
     public void update(UpdateCarRequest updateCarRequest);
+
+    public void delete(int id);
 }
