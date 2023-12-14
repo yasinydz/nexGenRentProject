@@ -20,8 +20,4 @@ public class ModelManager implements ModelService {
         return modelRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public String updateModel(int id, UpdateModelRequest request) {
-        return null;
-    }
 }

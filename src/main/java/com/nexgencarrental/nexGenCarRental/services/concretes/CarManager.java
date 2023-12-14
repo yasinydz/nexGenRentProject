@@ -10,6 +10,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,26 @@ public class CarManager implements CarService {
             getCarList.add(dto);
         }
         return getCarList;
+    }
+
+    @Override
+    public GetCarResponse getById(int id) {
+        Car getByIdCarResponse = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+
+        GetCarResponse getByIdCar = new GetCarResponse();
+
+        Model model = modelService.getModelById(getByIdCarResponse.getModel().getId());
+        Color color = colorService.getColorById(getByIdCarResponse.getColor().getId());
+
+        getByIdCar.setKilometer(getByIdCarResponse.getKilometer());
+        getByIdCar.setYear(getByIdCarResponse.getYear());
+        getByIdCar.setDailyPrice(getByIdCarResponse.getDailyPrice());
+        getByIdCar.setPlate(getByIdCarResponse.getPlate());
+        getByIdCar.setModel(new GetModelListResponse(model.getName()));
+        getByIdCar.setColor(new GetColorListResponse(color.getName()));
+
+        return getByIdCar;
     }
 
     @Override
