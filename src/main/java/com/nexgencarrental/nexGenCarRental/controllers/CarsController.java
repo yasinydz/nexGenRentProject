@@ -28,8 +28,8 @@ public class CarsController {
     }
 
     @PutMapping("/update")
-    public String update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
-        return this.carService.update(updateCarRequest);
+    public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
+        this.carService.update(updateCarRequest);
     }
 
 

@@ -11,5 +11,5 @@ public interface CarService {
     public List<GetCarListResponse> getAll();
     public void add(AddCarRequest addCarRequest);
 
-    String update(UpdateCarRequest updateCarRequest);
+    public void update(UpdateCarRequest updateCarRequest);
 }
