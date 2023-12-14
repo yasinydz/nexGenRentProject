@@ -36,6 +36,4 @@ public class CarsController {
         carService.delete(id);
     }
 
-
-
 }

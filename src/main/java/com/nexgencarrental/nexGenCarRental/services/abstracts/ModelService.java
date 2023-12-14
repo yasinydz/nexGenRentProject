@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface ModelService {
     Model getModelById(int id);
-
-    String updateModel(int id, UpdateModelRequest request);
 }
