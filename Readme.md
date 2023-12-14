@@ -3,6 +3,25 @@
 ## Proje Tanımı
 
 Bu proje, Tobeto kursu kapsamında geliştirilen bir uygulamadır. NexGenRentProject, katmanlı mimari kullanılarak geliştirilmiş bir kiralama sistemini içermektedir. Proje, tüm veritabanı işlemleri, servis katmanı ve repository katmanını içermektedir.
+---
+## Katkıda Bulunanlar
+
+Bu projeye katkıda bulunanlar aşağıda listelenmiştir. Projeye katkı sağlayan herkese teşekkür ederiz!
+
+- [Hüseyin Demirel](https://github.com/HsynDmrl) - Proje Takım Üyesi
+- [Yasin Yıldız](https://github.com/PickerWork) - Proje Takım Üyesi
+- [Ege Kavcıoğlu](https://github.com/EgeKavcioglu) - Proje Takım Üyesi
+- [Mustafa Tayyar](https://github.com/urmustafa) - Proje Takım Üyesi
+--- 
+## Veritabanı ER Diagramı
+
+Aşağıda, PostgreSQL üzerinde oluşturulan ER (Entity-Relationship) diagramı bulunmaktadır:
+
+![ER Diagram](https://github.com/PickerWork/nexGenRentProject/raw/master/Diagram.png)
+
+Bu diagram, projenin veritabanı yapısını göstermektedir. Detayları incelemek için lütfen [buraya](https://github.com/PickerWork/nexGenRentProject/blob/master/Diagram.png) tıklayın.
+
+---
 ## Güncellemeler
 
 **13.12.2023 Tarihli Güncellemeler:**
