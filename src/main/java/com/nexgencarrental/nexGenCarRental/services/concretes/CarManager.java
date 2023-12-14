@@ -99,7 +99,7 @@ public class CarManager implements CarService {
     public void delete(int id) {
         Car deleteCar = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
-        carRepository.deleteById(id);
+        carRepository.delete(deleteCar);
 
     }
 
