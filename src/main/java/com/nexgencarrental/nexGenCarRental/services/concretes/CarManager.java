@@ -72,16 +72,25 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public String update(UpdateCarRequest updateCarRequest) {
+    public void update(UpdateCarRequest updateCarRequest) {
+
+        Model model = modelService.getModelById(updateCarRequest.getModelId());
+        if (model == null) {
+            throw new RuntimeException("Belirtilen ModelId'ye sahip bir model bulunamadı.");
+        }
+
+        Color color = colorService.getColorById(updateCarRequest.getColorId());
+        if (color == null) {
+            throw new RuntimeException("Belirtilen ColorId'ye sahip bir renk bulunamadı.");
+        }
+
         Car updateCar = carRepository.findById(updateCarRequest.getId()).orElseThrow();
         updateCar.setKilometer(updateCarRequest.getKilometer());
         updateCar.setYear(updateCarRequest.getYear());
         updateCar.setDailyPrice(updateCarRequest.getDailyPrice());
         updateCar.setPlate(updateCarRequest.getPlate());
-        //updateCar.setModel(updateCarRequest.getModelId());
-        //updateCar.setColor(updateCarRequest.getColorId());
+        updateCar.setModel(model);
+        updateCar.setColor(color);
         this.carRepository.save(updateCar);
-
-        return "Güncelleme Tamamlandı.";
     }
 }
