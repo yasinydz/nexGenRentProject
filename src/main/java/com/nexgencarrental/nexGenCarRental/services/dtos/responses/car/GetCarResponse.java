@@ -14,7 +14,7 @@ public class GetCarResponse {
     private int year;
     private double dailyPrice;
     private String plate;
-    private GetModelListResponse model;
-    private GetColorListResponse color;
+    private String modelName;
+    private String colorName;
 }
 

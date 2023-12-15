@@ -7,6 +7,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarLis
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CarsController {
     private final CarService carService;
-
     @GetMapping("/getAll")
     public List<GetCarListResponse> getAll(){
         return this.carService.getAll();
@@ -26,7 +26,8 @@ public class CarsController {
         return carService.getById(id);
     }
     @PostMapping("/add")
-    public void add(@RequestBody @Valid AddCarRequest addCarRequest){
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void add(@RequestBody @Valid AddCarRequest addCarRequest) {
         this.carService.add(addCarRequest);
     }
     @PutMapping("/update")
@@ -35,7 +36,6 @@ public class CarsController {
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id ) {
-        carService.delete(id);
+        this.carService.delete(id);
     }
-
 }
