@@ -59,16 +59,25 @@ public class CarManager implements CarService {
             throw new RuntimeException(addCarRequest.getColorId() + " id'ye sahip renk sistemde yoktur.");
         }
 
+        // Kullanıcıdan alınan veriyi boşlukları silmeden önce tutan değişken
+        String originalPlate = addCarRequest.getPlate();
+
+        // Boşlukları silerek temizlenmiş plaka değerini al
+        String cleanedPlate = originalPlate.replaceAll("\\s", "");
+
         // Aynı plakada başka bir araç olup olmadığını kontrol etme
-        if (carRepository.existsByPlate(addCarRequest.getPlate().replaceAll("\\s", ""))) {
+        if (carRepository.existsByPlate(cleanedPlate)) {
             throw new RuntimeException("Sistemde bu plaka bulunuyor, farklı bir plaka giriniz.");
         }
 
         // Yeni aracın oluşturulması ve kaydedilmesi
         Car addCar = modelMapperService.forRequest().map(addCarRequest, Car.class);
-        carRepository.save(addCar);
 
+        // Temizlenmiş plaka değerini kullanarak kayıt yapma
+        addCar.setPlate(cleanedPlate);
+        carRepository.save(addCar);
     }
+
     @Override
     public void update(UpdateCarRequest updateCarRequest) {
 
