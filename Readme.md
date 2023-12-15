@@ -1,23 +1,23 @@
-# NexGenRentProject
+# NexGenRentProject 🚗
 
-## Proje Tanımı
+## Proje Tanımı 📚 
 
 Bu proje, Tobeto kursu kapsamında geliştirilen bir uygulamadır. NexGenRentProject, katmanlı mimari kullanılarak geliştirilmiş bir kiralama sistemini içermektedir. Proje, tüm veritabanı işlemleri, servis katmanı ve repository katmanını içermektedir.
 
 ---
 
-## Katkıda Bulunanlar
+## Katkıda Bulunanlar 🛠️
 
 Bu projeye katkıda bulunanlar aşağıda listelenmiştir. Projeye katkı sağlayan herkese teşekkür ederiz!
 
-- [Hüseyin Demirel](https://github.com/HsynDmrl)
-- [Yasin Yıldız](https://github.com/PickerWork)
-- [Ege Kavcıoğlu](https://github.com/EgeKavcioglu)
-- [Mustafa Tayyar](https://github.com/urmustafa)
+- [Hüseyin Demirel](https://github.com/HsynDmrl) 🤝
+- [Yasin Yıldız](https://github.com/PickerWork) 🤝
+- [Ege Kavcıoğlu](https://github.com/EgeKavcioglu) 🤝
+- [Mustafa Tayyar](https://github.com/urmustafa) 🤝
 
 --- 
 
-## Veritabanı ER Diagramı
+## Veritabanı ER Diagramı 📊 
 
 Aşağıda, PostgreSQL üzerinde oluşturulan ER (Entity-Relationship) diagramı bulunmaktadır:
 
@@ -27,10 +27,10 @@ Bu diagram, projenin veritabanı yapısını göstermektedir. Detayları incelem
 
 ---
 
-## Güncellemeler
+## Güncellemeler 📢 
 
 <details>
-<summary>15.12.2023 Tarihli Güncellemeler</summary>
+<summary>15.12.2023 Tarihli Güncellemeler 📅</summary> 
 
 - Auto Mapping işlemi yapan "Model Mapper" implementasyonu projeye eklenmiştir. Artık araç verileri listelenirken, Sırasıyla plaka, kilometre, ücret, yıl, model adı ve renk adı bilgileri görüntülenmektedir.
 
@@ -45,7 +45,7 @@ Bu diagram, projenin veritabanı yapısını göstermektedir. Detayları incelem
 </details>
 
 <details>
-<summary>13.12.2023 Tarihli Güncellemeler</summary>
+<summary>13.12.2023 Tarihli Güncellemeler 📅</summary>
 
 - Sisteme Swagger desteği eklendi.
 
@@ -69,7 +69,7 @@ Yapılan bu güncellemelerle sistem daha güvenilir ve sağlıklı bir şekilde 
 </details>
 
 
-## Özellikler
+## Özellikler 💡
 
 - **Katmanlı Mimarisi:** Projede, katmanlı mimari kullanılmıştır. Bu sayede kodun modüler olması sağlanmış ve bakım kolaylığı elde edilmiştir.
 
