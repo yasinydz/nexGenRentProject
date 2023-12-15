@@ -67,9 +67,9 @@ Bu diagram, projenin veritabanı yapısını göstermektedir. Detayları incelem
 Yapılan bu güncellemelerle sistem daha güvenilir ve sağlıklı bir şekilde çalışmaktadır.
 
 </details>
----
-<details>
-<summary>Özellikler</summary>
+
+
+## Özellikler
 
 - **Katmanlı Mimarisi:** Projede, katmanlı mimari kullanılmıştır. Bu sayede kodun modüler olması sağlanmış ve bakım kolaylığı elde edilmiştir.
 
@@ -81,4 +81,3 @@ Yapılan bu güncellemelerle sistem daha güvenilir ve sağlıklı bir şekilde 
 
 - **Mapperlar:** Core.Utilities içindeki mapper'lar, veritabanı nesneleri ile DTO'lar arasında veri dönüşümlerini gerçekleştirmek için kullanılmaktadır.
 
-<details>
