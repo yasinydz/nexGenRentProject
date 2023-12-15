@@ -17,11 +17,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class GetCarListResponse {
-    private int kilometer;
-    private int year;
-    private double dailyPrice;
     private String plate;
-    private GetModelListResponse model;
-    private GetColorListResponse color;
+    private int kilometer;
+    private double dailyPrice;
+    private int year;
+    private String modelName;
+    private String colorName;
 
 }
