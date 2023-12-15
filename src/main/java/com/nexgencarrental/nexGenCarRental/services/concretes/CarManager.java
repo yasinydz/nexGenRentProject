@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.Car;
 import com.nexgencarrental.nexGenCarRental.entities.Color;
 import com.nexgencarrental.nexGenCarRental.entities.Model;
@@ -12,118 +13,92 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarR
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CarManager implements CarService {
+
     private final CarRepository carRepository;
+    private ModelMapperService modelMapperService;
     private final ModelService modelService;
     private final ColorService colorService;
-
     @Override
     public List<GetCarListResponse> getAll() {
-        List<Car> carList = carRepository.findAll();
-        List<GetCarListResponse> getCarList = new ArrayList<>();
-        for (Car car : carList) {
-            GetCarListResponse dto = new GetCarListResponse();
-            dto.setKilometer(car.getKilometer());
-            dto.setYear(car.getYear());
-            dto.setDailyPrice(car.getDailyPrice());
-            dto.setPlate(car.getPlate());
-
-            Model model = modelService.getModelById(car.getModel().getId());
-            dto.setModel(new GetModelListResponse(model.getName()));
-
-            Color color = colorService.getColorById(car.getColor().getId());
-            dto.setColor(new GetColorListResponse(color.getName()));
-
-            getCarList.add(dto);
-        }
-        return getCarList;
+        return carRepository.findAll().stream()
+                .map(car -> modelMapperService.forResponse()
+                        .map(car, GetCarListResponse.class)).collect(Collectors.toList());
     }
-
     @Override
     public GetCarResponse getById(int id) {
-        Car getByIdCarResponse = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
-
-        GetCarResponse getByIdCar = new GetCarResponse();
-
-        Model model = modelService.getModelById(getByIdCarResponse.getModel().getId());
-        Color color = colorService.getColorById(getByIdCarResponse.getColor().getId());
-
-        getByIdCar.setKilometer(getByIdCarResponse.getKilometer());
-        getByIdCar.setYear(getByIdCarResponse.getYear());
-        getByIdCar.setDailyPrice(getByIdCarResponse.getDailyPrice());
-        getByIdCar.setPlate(getByIdCarResponse.getPlate());
-        getByIdCar.setModel(new GetModelListResponse(model.getName()));
-        getByIdCar.setColor(new GetColorListResponse(color.getName()));
-
-        return getByIdCar;
+        return carRepository.findById(id)
+                .map(car -> modelMapperService.forResponse().map(car, GetCarResponse.class))
+                .orElseThrow();
     }
-
     @Override
     public void add(AddCarRequest addCarRequest) {
-        Car addCar = new Car();
 
-        Model model = modelService.getModelById(addCarRequest.getModelId());
-        if (model == null) {
-            throw new RuntimeException("Belirtilen ModelId'ye sahip bir model bulunamadı.");
+        // Model id kontrolü
+        GetModelResponse getModelResponse = modelService.getModelById(addCarRequest.getModelId());
+        if (getModelResponse == null) {
+            throw new RuntimeException(addCarRequest.getModelId() + " Bu id'ye sahip model sistemde yoktur.");
         }
 
-        Color color = colorService.getColorById(addCarRequest.getColorId());
-        if (color == null) {
-            throw new RuntimeException("Belirtilen ColorId'ye sahip bir renk bulunamadı.");
+        // Color id kontrolü
+        GetColorResponse getColorResponse = colorService.getColorById(addCarRequest.getColorId());
+        if (getColorResponse == null) {
+            throw new RuntimeException(addCarRequest.getColorId() + " Bu id'ye sahip renk sistemde yoktur.");
         }
 
-        addCar.setKilometer(addCarRequest.getKilometer());
-        addCar.setYear(addCarRequest.getYear());
-        addCar.setDailyPrice(addCarRequest.getDailyPrice());
-        addCar.setPlate(addCarRequest.getPlate().replaceAll("\\s", ""));
-        addCar.setModel(model);
-        addCar.setColor(color);
+        // Aynı plakada başka bir araç olup olmadığını kontrol etme
+        if (carRepository.existsByPlate(addCarRequest.getPlate().trim().toUpperCase())) {
+            throw new RuntimeException("Sistemde bu plaka bulunuyor, farklı bir plaka giriniz.");
+        }
 
+        // Yeni aracın oluşturulması ve kaydedilmesi
+        Car addCar = modelMapperService.forRequest().map(addCarRequest, Car.class);
         carRepository.save(addCar);
-    }
 
+    }
     @Override
     public void update(UpdateCarRequest updateCarRequest) {
 
-        Model model = modelService.getModelById(updateCarRequest.getModelId());
-        if (model == null) {
-            throw new RuntimeException("Belirtilen ModelId'ye sahip bir model bulunamadı.");
+        // Model id kontrolü
+        GetModelResponse getModelResponse = modelService.getModelById(updateCarRequest.getModelId());
+        if (getModelResponse == null) {
+            throw new RuntimeException(updateCarRequest.getModelId() + " Güncellemek istediğiniz model id'ye sahip model sistemde yoktur.");
         }
 
-        Color color = colorService.getColorById(updateCarRequest.getColorId());
-        if (color == null) {
-            throw new RuntimeException("Belirtilen ColorId'ye sahip bir renk bulunamadı.");
+        // Color id kontrolü
+        GetColorResponse getColorResponse = colorService.getColorById(updateCarRequest.getColorId());
+        if (getColorResponse == null) {
+            throw new RuntimeException(updateCarRequest.getColorId() + " Güncellemek istediğiniz renk id'ye sahip renk sistemde yoktur.");
         }
 
-        Car updateCar = carRepository.findById(updateCarRequest.getId()).orElseThrow();
-        updateCar.setKilometer(updateCarRequest.getKilometer());
-        updateCar.setYear(updateCarRequest.getYear());
-        updateCar.setDailyPrice(updateCarRequest.getDailyPrice());
-        updateCar.setPlate(updateCarRequest.getPlate());
-        updateCar.setModel(model);
-        updateCar.setColor(color);
-        this.carRepository.save(updateCar);
+        // Araç id kontrolü
+        if (carRepository.findById(updateCarRequest.getId()).isPresent()) {
+            throw new RuntimeException(updateCarRequest.getId() + " nolu id'ye sahip araç bulunmamaktadır.");
+        }
+
+        // Yeni aracın güncellenmesi ve kaydedilmesi
+        Car updateCar = this.modelMapperService.forRequest()
+                .map(updateCarRequest, Car.class);
+        carRepository.save(updateCar);
+
     }
-
     @Override
     public void delete(int id) {
         Car deleteCar = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip araç bulunamadı."));
         carRepository.delete(deleteCar);
-
     }
-
-
-    //
 }
