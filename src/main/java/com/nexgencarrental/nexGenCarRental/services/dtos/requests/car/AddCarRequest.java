@@ -26,7 +26,7 @@ public class AddCarRequest {
     @DecimalMin(value = "0.0", inclusive = true, message = "Günlük fiyat sıfırdan küçük olamaz")
     private double dailyPrice;
 
-    @Pattern(regexp = "^\\d{1,9}\\s[A-Z]{1,3}\\s\\d{1,9}$", message = "'34 ABC 456' bu formata göre giriş yapınız")
+    @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = "'34 ABC 456' bu formata göre giriş yapınız")
     private String plate;
 
     //@PositiveOrZero yazmamız yeterli (@Positive de 0 dahil etmiyor)

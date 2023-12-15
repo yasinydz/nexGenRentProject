@@ -17,6 +17,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColo
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -27,7 +28,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class CarManager implements CarService {
-
     private final CarRepository carRepository;
     private ModelMapperService modelMapperService;
     private final ModelService modelService;
@@ -50,17 +50,17 @@ public class CarManager implements CarService {
         // Model id kontrolü
         GetModelResponse getModelResponse = modelService.getModelById(addCarRequest.getModelId());
         if (getModelResponse == null) {
-            throw new RuntimeException(addCarRequest.getModelId() + " Bu id'ye sahip model sistemde yoktur.");
+            throw new RuntimeException(addCarRequest.getModelId() + " id'ye sahip model sistemde yoktur.");
         }
 
         // Color id kontrolü
         GetColorResponse getColorResponse = colorService.getColorById(addCarRequest.getColorId());
         if (getColorResponse == null) {
-            throw new RuntimeException(addCarRequest.getColorId() + " Bu id'ye sahip renk sistemde yoktur.");
+            throw new RuntimeException(addCarRequest.getColorId() + " id'ye sahip renk sistemde yoktur.");
         }
 
         // Aynı plakada başka bir araç olup olmadığını kontrol etme
-        if (carRepository.existsByPlate(addCarRequest.getPlate().trim().toUpperCase())) {
+        if (carRepository.existsByPlate(addCarRequest.getPlate().replaceAll("\\s", ""))) {
             throw new RuntimeException("Sistemde bu plaka bulunuyor, farklı bir plaka giriniz.");
         }
 
@@ -85,7 +85,7 @@ public class CarManager implements CarService {
         }
 
         // Araç id kontrolü
-        if (carRepository.findById(updateCarRequest.getId()).isPresent()) {
+        if (!(carRepository.findById(updateCarRequest.getId()).isPresent())) {
             throw new RuntimeException(updateCarRequest.getId() + " nolu id'ye sahip araç bulunmamaktadır.");
         }
 
