@@ -29,7 +29,23 @@ Bu diagram, projenin veritabanı yapısını göstermektedir. Detayları incelem
 
 ## Güncellemeler
 
-**13.12.2023 Tarihli Güncellemeler:**
+<details>
+<summary>15.12.2023 Tarihli Güncellemeler</summary>
+
+- Auto Mapping işlemi yapan "Model Mapper" implementasyonu projeye eklenmiştir. Artık araç verileri listelenirken, Sırasıyla plaka, kilometre, ücret, yıl, model adı ve renk adı bilgileri görüntülenmektedir.
+
+- Tüm işlemler için Request-Response pattern'a uyulmuştur.
+
+- Araç eklenirken "Plate" kısmındaki boşluklar kaldırılarak kaydedilmektedir.
+
+- ModelService içerisinde ilgili kodlama yapıldı. Bir service, diğer bir entity'nin reposunu değil, ilgili service'ini çağırıyor.
+  
+- ER Diagramı projeye eklenmiştir.
+  
+</details>
+
+<details>
+<summary>13.12.2023 Tarihli Güncellemeler</summary>
 
 - Sisteme Swagger desteği eklendi.
 
@@ -49,6 +65,8 @@ Bu diagram, projenin veritabanı yapısını göstermektedir. Detayları incelem
   - Aynı plakaya sahip başka bir araç bulunmamalıdır.
 
 Yapılan bu güncellemelerle sistem daha güvenilir ve sağlıklı bir şekilde çalışmaktadır.
+
+</details>
 
 ## Özellikler
 
