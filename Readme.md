@@ -68,12 +68,18 @@ Yapılan bu güncellemelerle sistem daha güvenilir ve sağlıklı bir şekilde 
 
 </details>
 
+<details>
+<summary>Özellikler</summary>
 ## Özellikler
 
 - **Katmanlı Mimarisi:** Projede, katmanlı mimari kullanılmıştır. Bu sayede kodun modüler olması sağlanmış ve bakım kolaylığı elde edilmiştir.
 
-- **Veritabanı Nesneleri (Entities):** Tüm veritabanı nesneleri oluşturulmuştur. Bu nesneler, veritabanındaki tabloları temsil eder ve iş mantığıyla ilişkilidir.
+- **Veritabanı Nesneleri (Entities):** Tüm veritabanı nesneleri bulunmaktadır. Bu nesneler, veritabanındaki tabloları temsil eder ve iş mantığıyla ilişkilidir.
 
-- **Repository Katmanı:** Tüm veritabanı nesneleri için repository katmanı oluşturulmuştur. Bu katman, veritabanı işlemlerinin (ekleme, güncelleme, silme, sorgulama vb.) yönetilmesini sağlar.
+- **Repository Katmanı:** Tüm veritabanı nesneleri için repository katmanı bulunmaktadır. Bu katman, veritabanı işlemlerinin (ekleme, güncelleme, silme, sorgulama vb.) yönetilmesini sağlar.
 
-- **Service Katmanı:** Şu anlık içi boş olmakla birlikte, tüm servis katmanı dosyaları oluşturulmuştur. Bu katman, iş mantığının uygulandığı ve servis fonksiyonlarının bulunduğu bölümdür. İlerleyen aşamalarda bu fonksiyonlar doldurulacaktır.
+- **Service Katmanı:** Service katmanı, iş mantığının uygulandığı ve servis fonksiyonlarının bulunduğu bölümdür. Abstracts içinde service'ler, concretes içinde manager'lar bulunmaktadır. DTOs içinde ise request ve response objeleri yer almaktadır. Bu katman, genel projenin fonksiyonelliğini yönetir.
+
+- **Mapperlar:** Core.Utilities içindeki mapper'lar, veritabanı nesneleri ile DTO'lar arasında veri dönüşümlerini gerçekleştirmek için kullanılmaktadır.
+
+<details>
