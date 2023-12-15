@@ -22,16 +22,18 @@ public class AddCarRequest {
     @Max(value = 2024, message = "2024'den büyük olamaz")
     private int year;
 
-    @DecimalMin(value = "0.0", inclusive = false, message = "Günlük fiyat sıfırdan küçük olamaz")
+    //inclusive true olmalı çünkü inclusive=false değerinde 0'ı dahil etmiyor.
+    @DecimalMin(value = "0.0", inclusive = true, message = "Günlük fiyat sıfırdan küçük olamaz")
     private double dailyPrice;
 
     @Pattern(regexp = "^\\d{1,9}\\s[A-Z]{1,3}\\s\\d{1,9}$", message = "'34 ABC 456' bu formata göre giriş yapınız")
     private String plate;
 
-    @Min(value = 0, message = "Model Id 0'dan küçük olamaz.")
+    //@PositiveOrZero yazmamız yeterli (@Positive de 0 dahil etmiyor)
+    @PositiveOrZero(message = "Model Id 0'dan küçük olamaz.")
     private int modelId;
 
-    @Min(value = 0, message = "Color Id 0'dan küçük olamaz.")
+    @PositiveOrZero(message = "Color Id 0'dan küçük olamaz.")
     private int colorId;
 
 }
