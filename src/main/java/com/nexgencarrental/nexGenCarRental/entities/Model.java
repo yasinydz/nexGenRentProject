@@ -23,7 +23,6 @@ public class Model {
     private String name;
 
     @OneToMany(mappedBy = "model")
-    @JsonIgnore
     private List<Car> cars;
 
     @ManyToOne
