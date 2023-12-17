@@ -1,13 +1,16 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.Car;
 import com.nexgencarrental.nexGenCarRental.entities.Color;
 import com.nexgencarrental.nexGenCarRental.entities.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.ColorRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,19 @@ public class ColorManager implements ColorService {
                 new RuntimeException(id + " girdiğiniz id'ye sahip renk sistemde bulunamıyor."));
 
         return modelMapperService.forResponse().map(color, GetColorResponse.class);
+    }
+
+    @Override
+    public void add(AddColorRequest addColorRequest) {
+
+        // Aynı rengi 2.kez ekleme kontrolü
+        if (colorRepository.existsByName(addColorRequest.getName().trim().replaceAll("\\s", ""))){
+            throw new RuntimeException("Sistemde bu renk bulunuyor,farklı bir renk giriniz.");
+        }
+
+        Color addColor = modelMapperService.forRequest().map(addColorRequest, Color.class);
+
+        colorRepository.save(addColor);
     }
 
 }
