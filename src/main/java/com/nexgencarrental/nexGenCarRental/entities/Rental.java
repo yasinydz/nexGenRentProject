@@ -28,10 +28,10 @@ public class Rental {
     private LocalDate returnDate;
 
     @Column(name = "start_kilometer")
-    private int startKilometer;
+    private double startKilometer;
 
     @Column(name = "end_kilometer")
-    private int endKilometer;
+    private double endKilometer;
 
     @Column(name = "total_price")
     private double totalPrice;

@@ -1,6 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
 import com.nexgencarrental.nexGenCarRental.entities.Model;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
@@ -10,4 +12,5 @@ import java.util.List;
 
 public interface ModelService {
     GetModelResponse getModelById(int id);
+    public void add(AddModelRequest addModelRequest);
 }
