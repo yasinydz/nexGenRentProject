@@ -82,7 +82,9 @@ public class BrandManager implements BrandService{
 
     @Override
     public void delete(int id) {
-
+        Brand deleteBrand = brandRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip renk bulunamadı."));
+        brandRepository.delete(deleteBrand);
     }
 
 }
