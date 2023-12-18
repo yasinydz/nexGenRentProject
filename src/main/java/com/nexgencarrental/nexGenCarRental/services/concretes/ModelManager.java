@@ -12,11 +12,13 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModel
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +28,13 @@ public class ModelManager implements ModelService {
     private ModelMapperService modelMapperService;
     private final BrandService brandService;
 
+
+    @Override
+    public List<GetModelListResponse> getAll() {
+        return modelRepository.findAll().stream()
+                .map(car -> modelMapperService.forResponse()
+                        .map(car, GetModelListResponse.class)).collect(Collectors.toList());
+    }
 
     @Override
     public GetModelResponse getModelById(int id) {
@@ -53,6 +62,16 @@ public class ModelManager implements ModelService {
         Model addModel = modelMapperService.forRequest().map(addModelRequest, Model.class);
 
         modelRepository.save(addModel);
+
+    }
+
+    @Override
+    public void update(UpdateModelRequest updateModelRequest) {
+
+    }
+
+    @Override
+    public void delete(int id) {
 
     }
 
