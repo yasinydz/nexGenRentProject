@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ModelService {
-    List<GetModelListResponse> getAll();
-    GetModelResponse getModelById(int id);
+    public List<GetModelListResponse> getAll();
+    public GetModelResponse getModelById(int id);
     public void add(AddModelRequest addModelRequest);
-    void update(UpdateModelRequest updateModelRequest);
-    void delete(int id);
+    public void update(UpdateModelRequest updateModelRequest);
+    public void delete(int id);
 }
