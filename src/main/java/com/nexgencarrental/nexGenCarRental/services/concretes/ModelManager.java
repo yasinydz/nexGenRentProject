@@ -12,11 +12,14 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModel
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +29,13 @@ public class ModelManager implements ModelService {
     private ModelMapperService modelMapperService;
     private final BrandService brandService;
 
+
+    @Override
+    public List<GetModelListResponse> getAll() {
+        return modelRepository.findAll().stream()
+                .map(car -> modelMapperService.forResponse()
+                        .map(car, GetModelListResponse.class)).collect(Collectors.toList());
+    }
 
     @Override
     public GetModelResponse getModelById(int id) {
@@ -54,6 +64,40 @@ public class ModelManager implements ModelService {
 
         modelRepository.save(addModel);
 
+    }
+
+    @Override
+    public void update(UpdateModelRequest updateModelRequest) {
+        if(!(modelRepository.existsById(updateModelRequest.getId()))){
+            throw new RuntimeException(updateModelRequest.getId()+" nolu id'ye sahip model bulunmamaktadır.");
+        }
+
+        //Değiştirmek istenen modelin adını kontrol eder.
+
+        Optional<Model> existingModelOptional = modelRepository.findById(updateModelRequest.getId());
+        Model existingModel = existingModelOptional.get();
+        String newModel = updateModelRequest.getName().trim().replaceAll("\s", "");
+
+        //Id kontrol eder model varsa hata fırlatır yoksa ekler.
+
+        if (!existingModel.getName().equals(newModel) && modelRepository.existsByName(newModel)) {
+            throw new RuntimeException("Model sistemimizde mevcut lütfen farklı bir renk deneyin.");
+        }
+
+
+        Model model = this.modelMapperService.forRequest()
+                .map(updateModelRequest, Model.class);
+
+        model.setName(newModel);
+
+        modelRepository.save(model);
+    }
+
+    @Override
+    public void delete(int id) {
+        Model deleteModel = modelRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip model bulunamadı."));
+        modelRepository.delete(deleteModel);
     }
 
 
