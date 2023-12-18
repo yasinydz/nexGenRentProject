@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,12 +28,9 @@ public class ColorManager implements ColorService {
 
     @Override
     public List<GetColorListResponse> getAll() {
-        List<Color> colorList = colorRepository.findAll();
-
-        List<GetColorListResponse> colorResponse = colorList.stream()
-                .map(color ->this.modelMapperService.forResponse()
-                        .map(color, GetColorListResponse.class)).collect(Collectors.toList());
-        return colorResponse;
+        return colorRepository.findAll().stream()
+                .map(car -> modelMapperService.forResponse()
+                        .map(car, GetColorListResponse.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -59,6 +57,29 @@ public class ColorManager implements ColorService {
     @Override
     public void update(UpdateColorRequest updateColorRequest) {
 
+        if(!(colorRepository.existsById(updateColorRequest.getId()))){
+            throw new RuntimeException(updateColorRequest.getId()+" nolu id'ye sahip renk bulunmamaktadır.");
+        }
+
+        //Değiştirmek istenen rengin adını kontrol eder.
+
+        Optional<Color> existingColorOptional = colorRepository.findById(updateColorRequest.getId());
+        Color existingColor = existingColorOptional.get();
+        String newColor = updateColorRequest.getName().trim().replaceAll("\s", "");
+
+        //Id kontrol eder renk varsa hata fırlatır yoksa ekler.
+
+        if (!existingColor.getName().equals(newColor) && colorRepository.existsByName(newColor)) {
+            throw new RuntimeException("Renk sistemimizde mevcut lütfen farklı bir renk deneyin.");
+        }
+
+
+        Color color = this.modelMapperService.forRequest()
+                .map(updateColorRequest, Color.class);
+
+        color.setName(newColor);
+
+        colorRepository.save(color);
     }
 
     @Override

@@ -6,5 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GetColorListResponse {
+    private int id;
     private String name;
+    public GetColorListResponse() {
+    }
 }
