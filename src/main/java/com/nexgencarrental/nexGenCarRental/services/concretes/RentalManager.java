@@ -88,9 +88,16 @@ public class RentalManager implements RentalService {
         // Yeni Sipariş oluşturulması ve kaydedilmesi
         Rental addRental = modelMapperService.forRequest().map(addRentalRequest, Rental.class);
 
-        //addRental.setId(0);
-        rentalRepository.save(addRental);
+        // Araç kilometresi otomatik olarak id'den alıp kilometreyi çeker.
+        GetCarResponse carId = carService.getById(addRentalRequest.getCarId());
+        addRental.setStartKilometer(carId.getKilometer());
 
+        // totalPrice hesaplaması burada yapılır
+        addRental.setTotalPrice(carId.getDailyPrice() * ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate()));
+
+        addRental.setEndKilometer(null);
+        addRental.setReturnDate(null);
+        rentalRepository.save(addRental);
     }
 
     @Override
