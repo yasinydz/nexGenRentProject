@@ -10,6 +10,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.UpdateColorRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,11 @@ import java.util.List;
 public class ColorManager implements ColorService {
     private final ColorRepository colorRepository;
     private ModelMapperService modelMapperService;
+
+    @Override
+    public List<GetColorListResponse> getAll() {
+        return null;
+    }
 
     @Override
     public GetColorResponse getColorById(int id) {

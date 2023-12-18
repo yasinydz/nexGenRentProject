@@ -3,6 +3,7 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class ColorsController {
     private final ColorService colorService;
+    @GetMapping("{id}")
+    public GetColorResponse getById(int id){
+        return colorService.getById(id);
+    }
+
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddColorRequest addColorRequest) {
