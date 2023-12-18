@@ -39,12 +39,15 @@ public class ModelManager implements ModelService {
     public void add(AddModelRequest addModelRequest) {
 
         // Brand id kontrolü
-        //GetBrandResponse getBrandResponse = brandService.getBrandById(addModelRequest.getBrandId());
+        GetBrandResponse getBrandResponse = brandService.getBrandById(addModelRequest.getBrandId());
+        if (getBrandResponse == null) {
+            throw new RuntimeException(addModelRequest.getBrandId() + " id'ye sahip marka sistemde yoktur.");
+        }
 
-       // if (getBrandResponse == null) {
-      //      throw new RuntimeException(addModelRequest.getBrandId() + " id'ye sahip marka sistemde yoktur.");
-        //}
-
+        // Aynı isimde model eklenememe kontrolü
+        if (modelRepository.existsByName(addModelRequest.getName().trim().replaceAll("\\s", ""))) {
+            throw new RuntimeException("Sistemde,girdiğiniz model bulunuyor.Lütfen farkı bir model giriniz");
+        }
 
         // Yeni aracın oluşturulması ve kaydedilmesi
         Model addModel = modelMapperService.forRequest().map(addModelRequest, Model.class);
