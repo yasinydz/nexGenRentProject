@@ -13,15 +13,14 @@ public class AddRentalRequest {
 
     private LocalDate endDate;
 
-    private LocalDate returnDate;
+
+/*  private LocalDate returnDate;
 
     private double startKilometer;
 
     private double endKilometer;
 
-    private double totalPrice;
-
-    private double discount;
+    private double discount;*/
 
     private int carId;
 
