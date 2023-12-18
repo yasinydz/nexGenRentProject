@@ -84,7 +84,9 @@ public class ColorManager implements ColorService {
 
     @Override
     public void delete(int id) {
-
+        Color deleteColor = colorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip renk bulunamadı."));
+        colorRepository.delete(deleteColor);
     }
 
 }
