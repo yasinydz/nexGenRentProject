@@ -28,14 +28,10 @@ public class GetRentalListResponse {
 
     private double discount;
 
+    private int carId;
+
     private int customerId;
 
     private int employeeId;
-
-    private GetCarListResponse car;
-
-    private GetCustomerListResponse customer;
-
-    private GetEmployeeListResponse employee;
 
 }
