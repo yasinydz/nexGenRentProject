@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ColorService {
-    GetColorResponse getColorById(int id);
-    List<GetColorListResponse> getAll();
+    public GetColorResponse getColorById(int id);
+    public List<GetColorListResponse> getAll();
     public void add(AddColorRequest addColorRequest);
-    void update(UpdateColorRequest updateColorRequest);
-    void delete(int id);
+    public void update(UpdateColorRequest updateColorRequest);
+    public void delete(int id);
 }

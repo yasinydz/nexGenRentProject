@@ -10,10 +10,10 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetMode
 import java.util.List;
 
 public interface BrandService {
-    List<GetBrandListResponse> getAll();
-    GetBrandResponse getBrandById(int id);
+    public List<GetBrandListResponse> getAll();
+    public GetBrandResponse getBrandById(int id);
     public void add(AddBrandRequest addBrandRequest);
-    void update(UpdateBrandRequest updateBrandRequest);
-    void delete(int id);
+    public void update(UpdateBrandRequest updateBrandRequest);
+    public void delete(int id);
 
 }
