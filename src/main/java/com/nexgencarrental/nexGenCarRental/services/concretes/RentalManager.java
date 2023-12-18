@@ -21,6 +21,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRen
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +57,6 @@ public class RentalManager implements RentalService {
         if (getCarResponse == null) {
             throw new RuntimeException(addRentalRequest.getCarId() + " id'ye sahip araç sistemde yoktur.");
         }
-
         // Customer id kontrolü
         GetCustomerResponse getCustomerResponse = customerService.getById(addRentalRequest.getCustomerId());
         if (getCustomerResponse == null) {
@@ -66,6 +67,22 @@ public class RentalManager implements RentalService {
         GetEmployeeResponse getEmployeeResponse = employeeService.getById(addRentalRequest.getEmployeeId());
         if (getEmployeeResponse == null) {
             throw new RuntimeException(addRentalRequest.getEmployeeId() + " id'ye sahip çalışan sistemde yoktur.");
+        }
+
+        // Başlangıç tarihi kontrolü
+        if(addRentalRequest.getStartDate().isBefore(LocalDate.now())){
+            throw new RuntimeException("Başlangıç tarihi " + LocalDate.now() + " , yani bugünden daha önce bir tarih olamaz");
+        }
+
+        // Bitiş tarihi kontrolü
+        if (addRentalRequest.getEndDate().isBefore(addRentalRequest.getStartDate())){
+            throw new RuntimeException("Girdiğiniz tarih, " + addRentalRequest.getStartDate() + " bu tarihden ileri bir tarih olmalıdır.");
+        }
+
+        // Kiralama süresi kontrolü
+        if (ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate())  > 25
+                || 0 == ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate())) {
+            throw new RuntimeException("Bir araç minimum 1 gün, maksimum 25 gün kiralanabilir.");
         }
 
         // Yeni Sipariş oluşturulması ve kaydedilmesi
