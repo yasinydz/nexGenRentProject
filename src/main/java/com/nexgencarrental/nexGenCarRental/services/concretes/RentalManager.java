@@ -8,12 +8,14 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -21,12 +23,14 @@ public class RentalManager implements RentalService {
     private final RentalRepository rentalRepository;
     private final ModelMapperService modelMapperService;
     private final CarService carService;
-    private final EmployeeService employeeService;
     private final CustomerService customerService;
+    private final EmployeeService employeeService;
 
     @Override
     public List<GetRentalListResponse> getAll() {
-        return null;
+        return rentalRepository.findAll().stream()
+                .map(rental -> modelMapperService.forResponse()
+                        .map(rental, GetRentalListResponse.class)).collect(Collectors.toList());
     }
 
     @Override
