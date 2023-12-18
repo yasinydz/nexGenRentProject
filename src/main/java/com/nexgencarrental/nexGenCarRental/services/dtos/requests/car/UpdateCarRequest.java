@@ -12,7 +12,7 @@ public class UpdateCarRequest {
     private int id;
 
     @Min(value = 0,message = "sıfır veya sıfırdan büyük bir değer giriniz")
-    private int kilometer;
+    private double kilometer;
 
     @Min(value = 2005, message = "2005 ve 2024 aralıgında olmalıdır")
     @Max(value = 2024, message = "2024'den büyük olamaz")

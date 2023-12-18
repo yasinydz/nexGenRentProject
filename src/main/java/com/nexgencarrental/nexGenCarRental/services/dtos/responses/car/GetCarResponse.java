@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class GetCarResponse {
-    private int kilometer;
+    private double kilometer;
     private int year;
     private double dailyPrice;
     private String plate;

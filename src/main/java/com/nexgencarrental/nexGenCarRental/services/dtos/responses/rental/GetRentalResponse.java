@@ -22,7 +22,7 @@ public class GetRentalResponse {
 
     private double startKilometer;
 
-    private double endKilometer;
+    private Double endKilometer;
 
     private double totalPrice;
 
