@@ -13,7 +13,9 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBran
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.brand.BrandBusinessRulesService;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class BrandManager implements BrandService{
     private final BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
+    private BrandBusinessRulesService brandBusinessRulesService;
 
 
     @Override
@@ -36,17 +39,16 @@ public class BrandManager implements BrandService{
 
     @Override
     public GetBrandResponse getBrandById(int id) {
-        Brand brand = brandRepository.findById(id).orElseThrow(() ->
-                new RuntimeException(id + " girdiğiniz id'ye sahip marka sistemde bulunamıyor."));
 
-        return modelMapperService.forResponse().map(brand, GetBrandResponse.class);
+        brandBusinessRulesService.existsById(id);
+
+        return modelMapperService.forResponse().map(brandRepository.findById(id), GetBrandResponse.class);
     }
 
     @Override
     public void add(AddBrandRequest addBrandRequest) {
-        if (brandRepository.existsByName(addBrandRequest.getName().trim().replaceAll("\\s", ""))){
-            throw new RuntimeException("Sistemde bu marka bulunuyor,farklı bir marka giriniz.");
-        }
+
+        brandBusinessRulesService.existsByName(addBrandRequest.getName());
 
         Brand addBrand = modelMapperService.forRequest().map(addBrandRequest, Brand.class);
 

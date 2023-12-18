@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.Car;
+import com.nexgencarrental.nexGenCarRental.entities.Model;
 import com.nexgencarrental.nexGenCarRental.entities.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
@@ -103,10 +104,63 @@ public class RentalManager implements RentalService {
     @Override
     public void update(UpdateRentalRequest updateRentalRequest) {
 
+        // Sipariş id kontrolü
+        if (!(rentalRepository.findById(updateRentalRequest.getId()).isPresent())) {
+            throw new RuntimeException(updateRentalRequest.getId() + " nolu id'ye sahip araç bulunmamaktadır.");
+        }
+        // Car id kontrolü
+        GetCarResponse getCarResponse = carService.getById(updateRentalRequest.getCarId());
+        if (getCarResponse == null) {
+            throw new RuntimeException(updateRentalRequest.getCarId() + " id'ye sahip araç sistemde yoktur.");
+        }
+        // Customer id kontrolü
+        GetCustomerResponse getCustomerResponse = customerService.getById(updateRentalRequest.getCustomerId());
+        if (getCustomerResponse == null) {
+            throw new RuntimeException(updateRentalRequest.getCustomerId() + " id'ye sahip müşteri sistemde yoktur.");
+        }
+
+        // Employee id kontrolü
+        GetEmployeeResponse getEmployeeResponse = employeeService.getById(updateRentalRequest.getEmployeeId());
+        if (getEmployeeResponse == null) {
+            throw new RuntimeException(updateRentalRequest.getEmployeeId() + " id'ye sahip çalışan sistemde yoktur.");
+        }
+
+        // Başlangıç tarihi kontrolü
+        if(updateRentalRequest.getStartDate().isBefore(LocalDate.now())){
+            throw new RuntimeException("Başlangıç tarihi " + LocalDate.now() + " , yani bugünden daha önce bir tarih olamaz");
+        }
+
+        // Bitiş tarihi kontrolü
+        if (updateRentalRequest.getEndDate().isBefore(updateRentalRequest.getStartDate())){
+            throw new RuntimeException("Girdiğiniz tarih, " + updateRentalRequest.getStartDate() + " bu tarihden ileri bir tarih olmalıdır.");
+        }
+
+        // Kiralama süresi kontrolü
+        if (ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate())  > 25
+                || 0 == ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate())) {
+            throw new RuntimeException("Bir araç minimum 1 gün, maksimum 25 gün kiralanabilir.");
+        }
+
+        // Yeni Sipariş oluşturulması ve kaydedilmesi
+        Rental addRental = modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
+
+        // Araç kilometresi otomatik olarak id'den alıp kilometreyi çeker.
+        GetCarResponse carId = carService.getById(updateRentalRequest.getCarId());
+        addRental.setStartKilometer(carId.getKilometer());
+
+        // totalPrice hesaplaması burada yapılır
+        addRental.setTotalPrice(carId.getDailyPrice() * ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate()));
+
+        addRental.setEndKilometer(null);
+        addRental.setReturnDate(null);
+        rentalRepository.save(addRental);
+
     }
 
     @Override
     public void delete(int id) {
-
+        Rental deleteRental = rentalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip sipariş bulunamadı."));
+        rentalRepository.delete(deleteRental);
+        }
     }
-}
