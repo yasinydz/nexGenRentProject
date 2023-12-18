@@ -19,8 +19,6 @@ public class UpdateRentalRequest {
 
     private LocalDate returnDate;
 
-    //private double startKilometer;
-
     private double endKilometer;
 
     private double totalPrice;
