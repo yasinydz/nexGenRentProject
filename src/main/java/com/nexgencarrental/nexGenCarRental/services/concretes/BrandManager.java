@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +55,29 @@ public class BrandManager implements BrandService{
 
     @Override
     public void update(UpdateBrandRequest updateBrandRequest) {
+        if(!(brandRepository.existsById(updateBrandRequest.getId()))){
+            throw new RuntimeException(updateBrandRequest.getId()+" nolu id'ye sahip marka bulunmamaktadır.");
+        }
 
+        //Değiştirmek istenen markanın adını kontrol eder.
+
+        Optional<Brand> existingColorOptional = brandRepository.findById(updateBrandRequest.getId());
+        Brand existingBrand = existingColorOptional.get();
+        String newBrand = updateBrandRequest.getName().trim().replaceAll("\s", "");
+
+        //Id kontrol eder renk varsa hata fırlatır yoksa ekler.
+
+        if (!existingBrand.getName().equals(newBrand) && brandRepository.existsByName(newBrand)) {
+            throw new RuntimeException("Marka sistemimizde mevcut lütfen farklı bir renk deneyin.");
+        }
+
+
+        Brand brand = this.modelMapperService.forRequest()
+                .map(updateBrandRequest, Brand.class);
+
+        brand.setName(newBrand);
+
+        brandRepository.save(brand);
     }
 
     @Override
