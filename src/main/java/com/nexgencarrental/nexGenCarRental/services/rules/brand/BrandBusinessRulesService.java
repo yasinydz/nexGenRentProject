@@ -1,9 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.brand;
 
-public interface BrandBusinessRulesService {
-    String existsByBrandName(String name);
-    String existsByBrandId (int id);
+import com.nexgencarrental.nexGenCarRental.services.rules.base.BaseRules;
 
-    //String existsByBrandAll (int id);
+public interface BrandBusinessRulesService extends BaseRules {
 
 }
