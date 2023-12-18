@@ -8,10 +8,14 @@ import com.nexgencarrental.nexGenCarRental.repositories.BrandRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrandRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +23,11 @@ public class BrandManager implements BrandService{
     private final BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
 
+
+    @Override
+    public List<GetBrandListResponse> getAll() {
+        return null;
+    }
 
     @Override
     public GetBrandResponse getBrandById(int id) {
@@ -37,6 +46,16 @@ public class BrandManager implements BrandService{
         Brand addBrand = modelMapperService.forRequest().map(addBrandRequest, Brand.class);
 
         brandRepository.save(addBrand);
+    }
+
+    @Override
+    public void update(UpdateBrandRequest updateBrandRequest) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
     }
 
 }
