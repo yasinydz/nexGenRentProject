@@ -95,7 +95,9 @@ public class ModelManager implements ModelService {
 
     @Override
     public void delete(int id) {
-
+        Model deleteModel = modelRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip model bulunamadı."));
+        modelRepository.delete(deleteModel);
     }
 
 
