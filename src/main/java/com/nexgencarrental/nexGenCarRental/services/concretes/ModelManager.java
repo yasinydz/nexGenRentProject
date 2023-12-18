@@ -61,7 +61,7 @@ public class ModelManager implements ModelService {
 
         // Yeni aracın oluşturulması ve kaydedilmesi
         Model addModel = modelMapperService.forRequest().map(addModelRequest, Model.class);
-
+        addModel.setId(0);
         modelRepository.save(addModel);
 
     }
