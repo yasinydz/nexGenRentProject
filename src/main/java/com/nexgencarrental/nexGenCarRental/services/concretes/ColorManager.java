@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +27,12 @@ public class ColorManager implements ColorService {
 
     @Override
     public List<GetColorListResponse> getAll() {
-        return null;
+        List<Color> colorList = colorRepository.findAll();
+
+        List<GetColorListResponse> colorResponse = colorList.stream()
+                .map(color ->this.modelMapperService.forResponse()
+                        .map(color, GetColorListResponse.class)).collect(Collectors.toList());
+        return colorResponse;
     }
 
     @Override
