@@ -11,11 +11,13 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrand
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +28,9 @@ public class BrandManager implements BrandService{
 
     @Override
     public List<GetBrandListResponse> getAll() {
-        return null;
+        return brandRepository.findAll().stream()
+                .map(car -> modelMapperService.forResponse()
+                        .map(car, GetBrandListResponse.class)).collect(Collectors.toList());
     }
 
     @Override

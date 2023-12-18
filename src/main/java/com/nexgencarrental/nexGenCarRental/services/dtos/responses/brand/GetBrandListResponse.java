@@ -6,5 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GetBrandListResponse {
+    private int id;
     private String name;
+
+    public GetBrandListResponse() {
+    }
 }
