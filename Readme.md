@@ -9,11 +9,9 @@ Bu proje, Tobeto kursu kapsamında geliştirilen bir uygulamadır. NexGenRentPro
 ## Katkıda Bulunanlar 🛠️
 
 Bu projeye katkıda bulunanlar aşağıda listelenmiştir. Projeye katkı sağlayan herkese teşekkür ederiz!
-
-- [Hüseyin Demirel](https://github.com/HsynDmrl) 🤝
-- [Yasin Yıldız](https://github.com/PickerWork) 🤝
-- [Ege Kavcıoğlu](https://github.com/EgeKavcioglu) 🤝
-- [Mustafa Tayyar](https://github.com/urmustafa) 🤝
+| [![Hüseyin Demirel](https://github.com/hsyndmrl.png)](https://github.com/HsynDmrl) | [![Yasin Yıldız](https://github.com/PickerWork.png)](https://github.com/PickerWork) | [![Ege Kavcıoğlu](https://github.com/EgeKavcioglu.png)](https://github.com/EgeKavcioglu) | [![Mustafa Tayyar](https://github.com/urmustafa.png)](https://github.com/urmustafa) |
+| --- | --- | --- | --- |
+| Hüseyin Demirel 🤝 | Yasin Yıldız 🤝 | Ege Kavcıoğlu 🤝 | Mustafa Tayyar 🤝|
 
 --- 
 
