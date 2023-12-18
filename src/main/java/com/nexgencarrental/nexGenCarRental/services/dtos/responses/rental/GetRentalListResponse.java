@@ -1,5 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental;
 
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,10 +28,14 @@ public class GetRentalListResponse {
 
     private double discount;
 
-    private int carId;
-
     private int customerId;
 
     private int employeeId;
+
+    private GetCarListResponse car;
+
+    private GetCustomerListResponse customer;
+
+    private GetEmployeeListResponse employee;
 
 }
