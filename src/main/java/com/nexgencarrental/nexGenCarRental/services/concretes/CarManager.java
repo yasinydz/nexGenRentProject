@@ -85,16 +85,12 @@ public class CarManager implements CarService {
     public void update(UpdateCarRequest updateCarRequest) {
 
         // Model id kontrolü
-        GetModelResponse getModelResponse = modelService.getModelById(updateCarRequest.getModelId());
-        if (getModelResponse == null) {
-            throw new RuntimeException(updateCarRequest.getModelId() + " Güncellemek istediğiniz model id'ye sahip model sistemde yoktur.");
-        }
+        modelService.getModelById(updateCarRequest.getModelId());
+
 
         // Color id kontrolü
-        GetColorResponse getColorResponse = colorService.getColorById(updateCarRequest.getColorId());
-        if (getColorResponse == null) {
-            throw new RuntimeException(updateCarRequest.getColorId() + " Güncellemek istediğiniz renk id'ye sahip renk sistemde yoktur.");
-        }
+        colorService.getColorById(updateCarRequest.getColorId());
+
 
         // Araç id kontrolü
         carBusinessRulesService.existsById(updateCarRequest.getId());
