@@ -19,13 +19,11 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
         super(repository, modelMapperService, GetBrandResponse.class, GetBrandListResponse.class, Brand.class, AddBrandRequest.class, UpdateBrandRequest.class);
         this.brandBusinessRulesService = brandBusinessRulesService;
     }
-
     @Override
     public void customAdd(AddBrandRequest addBrandRequest) {
         brandBusinessRulesService.existsByName(addBrandRequest.getName());
         add(addBrandRequest, Brand.class);
     }
-
     @Override
     public void customUpdate(UpdateBrandRequest updateBrandRequest) {
         brandBusinessRulesService.existsById(updateBrandRequest.getId());

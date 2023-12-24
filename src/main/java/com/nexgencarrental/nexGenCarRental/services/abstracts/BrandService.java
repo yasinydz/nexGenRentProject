@@ -8,8 +8,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBran
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 
 import java.util.List;
-public interface BrandService extends BaseService<Brand, BrandRepository, GetBrandResponse,
-        GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> {
+public interface BrandService extends BaseService<Brand, BrandRepository, GetBrandResponse, GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> {
     void customAdd(AddBrandRequest addBrandRequest);
     void customUpdate(UpdateBrandRequest updateBrandRequest);
 }
