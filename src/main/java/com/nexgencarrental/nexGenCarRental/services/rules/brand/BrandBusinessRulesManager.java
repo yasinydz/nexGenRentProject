@@ -15,7 +15,6 @@ public class BrandBusinessRulesManager implements BrandBusinessRulesService {
         if (brandRepository.existsByName(name.trim().replaceAll("\\s", ""))){
             throw new RuntimeException("The Brand name is already exists!");
         }
-
     }
 
     @Override
