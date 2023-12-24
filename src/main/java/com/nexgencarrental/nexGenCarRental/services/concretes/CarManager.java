@@ -51,22 +51,14 @@ public class CarManager implements CarService {
     public void add(AddCarRequest addCarRequest) {
 
         // Model id kontrolü
-        GetModelResponse getModelResponse = modelService.getModelById(addCarRequest.getModelId());
-        if (getModelResponse == null) {
-            throw new RuntimeException(addCarRequest.getModelId() + " id'ye sahip model sistemde yoktur.");
-        }
+        modelService.getModelById(addCarRequest.getModelId());
+
 
         // Color id kontrolü
-        GetColorResponse getColorResponse = colorService.getColorById(addCarRequest.getColorId());
-        if (getColorResponse == null) {
-            throw new RuntimeException(addCarRequest.getColorId() + " id'ye sahip renk sistemde yoktur.");
-        }
-
-        // Kullanıcıdan alınan veriyi boşlukları silmeden önce tutan değişken
-        String originalPlate = addCarRequest.getPlate();
+        colorService.getColorById(addCarRequest.getColorId());
 
         // Boşlukları silerek temizlenmiş plaka değerini al
-        String cleanedPlate = originalPlate.replaceAll("\\s", "");
+        String cleanedPlate = addCarRequest.getPlate().replaceAll("\\s", "");
 
         // Aynı plakada başka bir araç olup olmadığını kontrol etme
         if (carRepository.existsByPlate(cleanedPlate)) {
