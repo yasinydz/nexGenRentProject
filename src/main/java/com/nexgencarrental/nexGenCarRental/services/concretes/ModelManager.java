@@ -58,6 +58,7 @@ public class ModelManager implements ModelService {
         }
 
         // Aynı isimde model eklenememe kontrolü
+
         modelBusinessRulesService.existsByName(addModelRequest.getName());
 
 
@@ -70,27 +71,13 @@ public class ModelManager implements ModelService {
 
     @Override
     public void update(UpdateModelRequest updateModelRequest) {
-        if(!(modelRepository.existsById(updateModelRequest.getId()))){
-            throw new RuntimeException(updateModelRequest.getId()+" nolu id'ye sahip model bulunmamaktadır.");
-        }
-
-        //Değiştirmek istenen modelin adını kontrol eder.
-
-        Optional<Model> existingModelOptional = modelRepository.findById(updateModelRequest.getId());
-        Model existingModel = existingModelOptional.get();
-        String newModel = updateModelRequest.getName().trim().replaceAll("\s", "");
-
-        //Id kontrol eder model varsa hata fırlatır yoksa ekler.
-
-        if (!existingModel.getName().equals(newModel) && modelRepository.existsByName(newModel)) {
-            throw new RuntimeException("Model sistemimizde mevcut lütfen farklı bir renk deneyin.");
-        }
+        modelBusinessRulesService.existsById(updateModelRequest.getId());
+        modelBusinessRulesService.existsByName(updateModelRequest.getName());
+        brandService.getById(updateModelRequest.getBrandId());
 
 
         Model model = this.modelMapperService.forRequest()
                 .map(updateModelRequest, Model.class);
-
-        model.setName(newModel);
 
         modelRepository.save(model);
     }
