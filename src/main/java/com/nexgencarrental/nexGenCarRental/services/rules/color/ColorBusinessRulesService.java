@@ -1,4 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.color;
 
-public interface ColorBusinessRulesService {
+import com.nexgencarrental.nexGenCarRental.services.rules.base.BaseRules;
+
+public interface ColorBusinessRulesService extends BaseRules {
+    void existsByName(String name);
 }

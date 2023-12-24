@@ -12,7 +12,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColor
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.UpdateColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.color.ColorBusinessRulesService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class ColorManager implements ColorService {
     private final ColorRepository colorRepository;
     private ModelMapperService modelMapperService;
+    private final ColorBusinessRulesService colorBusinessRulesService;
 
     @Override
     public List<GetColorListResponse> getAll() {
@@ -45,9 +46,7 @@ public class ColorManager implements ColorService {
     public void add(AddColorRequest addColorRequest) {
 
         // Aynı rengi 2.kez ekleme kontrolü
-        if (colorRepository.existsByName(addColorRequest.getName().trim().replaceAll("\\s", ""))){
-            throw new RuntimeException("Sistemde bu renk bulunuyor,farklı bir renk giriniz.");
-        }
+        colorBusinessRulesService.existsByName(addColorRequest.getName());
 
         Color addColor = modelMapperService.forRequest().map(addColorRequest, Color.class);
 
@@ -57,27 +56,11 @@ public class ColorManager implements ColorService {
     @Override
     public void update(UpdateColorRequest updateColorRequest) {
 
-        if(!(colorRepository.existsById(updateColorRequest.getId()))){
-            throw new RuntimeException(updateColorRequest.getId()+" nolu id'ye sahip renk bulunmamaktadır.");
-        }
-
-        //Değiştirmek istenen rengin adını kontrol eder.
-
-        Optional<Color> existingColorOptional = colorRepository.findById(updateColorRequest.getId());
-        Color existingColor = existingColorOptional.get();
-        String newColor = updateColorRequest.getName().trim().replaceAll("\s", "");
-
-        //Id kontrol eder renk varsa hata fırlatır yoksa ekler.
-
-        if (!existingColor.getName().equals(newColor) && colorRepository.existsByName(newColor)) {
-            throw new RuntimeException("Renk sistemimizde mevcut lütfen farklı bir renk deneyin.");
-        }
-
+        colorBusinessRulesService.existsById(updateColorRequest.getId());
+        colorBusinessRulesService.existsByName(updateColorRequest.getName());
 
         Color color = this.modelMapperService.forRequest()
                 .map(updateColorRequest, Color.class);
-
-        color.setName(newColor);
 
         colorRepository.save(color);
     }
