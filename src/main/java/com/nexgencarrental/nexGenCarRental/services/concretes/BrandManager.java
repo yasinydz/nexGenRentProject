@@ -2,91 +2,34 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.Brand;
-import com.nexgencarrental.nexGenCarRental.entities.Color;
-import com.nexgencarrental.nexGenCarRental.entities.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.BrandRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrandRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.*;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.*;
 import com.nexgencarrental.nexGenCarRental.services.rules.brand.BrandBusinessRulesService;
-import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class BrandManager implements BrandService{
-    private final BrandRepository brandRepository;
-    private ModelMapperService modelMapperService;
-    private BrandBusinessRulesService brandBusinessRulesService;
+public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandResponse, GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> implements BrandService {
 
+    private final BrandBusinessRulesService brandBusinessRulesService;
 
-    @Override
-    public List<GetBrandListResponse> getAll() {
-        return brandRepository.findAll().stream()
-                .map(car -> modelMapperService.forResponse()
-                        .map(car, GetBrandListResponse.class)).collect(Collectors.toList());
+    public BrandManager(BrandRepository repository, ModelMapperService modelMapperService, BrandBusinessRulesService brandBusinessRulesService) {
+        super(repository, modelMapperService, GetBrandResponse.class, GetBrandListResponse.class, Brand.class, AddBrandRequest.class, UpdateBrandRequest.class);
+        this.brandBusinessRulesService = brandBusinessRulesService;
     }
 
     @Override
-    public GetBrandResponse getBrandById(int id) {
-
-        brandBusinessRulesService.existsById(id);
-
-        return modelMapperService.forResponse().map(brandRepository.findById(id), GetBrandResponse.class);
-    }
-
-    @Override
-    public void add(AddBrandRequest addBrandRequest) {
-
+    public void customAdd(AddBrandRequest addBrandRequest) {
         brandBusinessRulesService.existsByName(addBrandRequest.getName());
-
-        Brand addBrand = modelMapperService.forRequest().map(addBrandRequest, Brand.class);
-
-        brandRepository.save(addBrand);
+        add(addBrandRequest, Brand.class);
     }
 
     @Override
-    public void update(UpdateBrandRequest updateBrandRequest) {
-        if(!(brandRepository.existsById(updateBrandRequest.getId()))){
-            throw new RuntimeException(updateBrandRequest.getId()+" nolu id'ye sahip marka bulunmamaktadır.");
-        }
-
-        //Değiştirmek istenen markanın adını kontrol eder.
-
-        Optional<Brand> existingColorOptional = brandRepository.findById(updateBrandRequest.getId());
-        Brand existingBrand = existingColorOptional.get();
-        String newBrand = updateBrandRequest.getName().trim().replaceAll("\s", "");
-
-        //Id kontrol eder renk varsa hata fırlatır yoksa ekler.
-
-        if (!existingBrand.getName().equals(newBrand) && brandRepository.existsByName(newBrand)) {
-            throw new RuntimeException("Marka sistemimizde mevcut lütfen farklı bir renk deneyin.");
-        }
-
-
-        Brand brand = this.modelMapperService.forRequest()
-                .map(updateBrandRequest, Brand.class);
-
-        brand.setName(newBrand);
-
-        brandRepository.save(brand);
+    public void customUpdate(UpdateBrandRequest updateBrandRequest) {
+        brandBusinessRulesService.existsById(updateBrandRequest.getId());
+        brandBusinessRulesService.existsByName(updateBrandRequest.getName());
+        update(updateBrandRequest, Brand.class);
     }
-
-    @Override
-    public void delete(int id) {
-        Brand deleteBrand = brandRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip renk bulunamadı."));
-        brandRepository.delete(deleteBrand);
-    }
-
 }

@@ -49,7 +49,7 @@ public class ModelManager implements ModelService {
     public void add(AddModelRequest addModelRequest) {
 
         // Brand id kontrolü
-        GetBrandResponse getBrandResponse = brandService.getBrandById(addModelRequest.getBrandId());
+        GetBrandResponse getBrandResponse = brandService.getById(addModelRequest.getBrandId());
         if (getBrandResponse == null) {
             throw new RuntimeException(addModelRequest.getBrandId() + " id'ye sahip marka sistemde yoktur.");
         }
