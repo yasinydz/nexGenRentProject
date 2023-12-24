@@ -14,6 +14,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBran
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRulesManager;
+import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRulesService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class ModelManager implements ModelService {
     private final ModelRepository modelRepository;
     private ModelMapperService modelMapperService;
     private final BrandService brandService;
+    private ModelBusinessRulesService modelBusinessRulesService;
 
 
     @Override
@@ -55,9 +58,8 @@ public class ModelManager implements ModelService {
         }
 
         // Aynı isimde model eklenememe kontrolü
-        if (modelRepository.existsByName(addModelRequest.getName().trim().replaceAll("\\s", ""))) {
-            throw new RuntimeException("Sistemde,girdiğiniz model bulunuyor.Lütfen farkı bir model giriniz");
-        }
+        modelBusinessRulesService.existsByName(addModelRequest.getName());
+
 
         // Yeni aracın oluşturulması ve kaydedilmesi
         Model addModel = modelMapperService.forRequest().map(addModelRequest, Model.class);
