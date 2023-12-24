@@ -16,6 +16,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColo
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesService;
+import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRulesService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class CarManager implements CarService {
     private ModelMapperService modelMapperService;
     private final ModelService modelService;
     private final ColorService colorService;
+    private CarBusinessRulesService carBusinessRulesService;
     @Override
     public List<GetCarListResponse> getAll() {
         return carRepository.findAll().stream()
@@ -94,14 +97,19 @@ public class CarManager implements CarService {
         }
 
         // Araç id kontrolü
-        if (!(carRepository.findById(updateCarRequest.getId()).isPresent())) {
-            throw new RuntimeException(updateCarRequest.getId() + " nolu id'ye sahip araç bulunmamaktadır.");
-        }
+        carBusinessRulesService.existsById(updateCarRequest.getId());
 
         // Yeni aracın güncellenmesi ve kaydedilmesi
-        Car updateCar = this.modelMapperService.forRequest()
+        Car car = this.modelMapperService.forRequest()
                 .map(updateCarRequest, Car.class);
-        carRepository.save(updateCar);
+
+        String updatePlate = updateCarRequest.getPlate();
+
+        // Boşlukları silerek temizlenmiş plaka değerini al
+        String cleanedPlate = updatePlate.replaceAll("\\s", "");
+        car.setPlate(cleanedPlate);
+
+        carRepository.save(car);
 
     }
     @Override
