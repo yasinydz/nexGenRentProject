@@ -45,7 +45,8 @@ public class CarManager implements CarService {
     public GetCarResponse getById(int id) {
         return carRepository.findById(id)
                 .map(car -> modelMapperService.forResponse().map(car, GetCarResponse.class))
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new RuntimeException(id + " girdiğiniz id'ye sahip araç sistemde bulunamıyor."));
     }
     @Override
     public void add(AddCarRequest addCarRequest) {

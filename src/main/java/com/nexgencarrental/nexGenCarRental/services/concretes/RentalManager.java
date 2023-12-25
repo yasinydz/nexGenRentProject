@@ -19,6 +19,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetE
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class RentalManager implements RentalService {
     private final CarService carService;
     private final CustomerService customerService;
     private final EmployeeService employeeService;
+    private final RentalBusinessRulesService rentalBusinessRulesService;
 
     @Override
     public List<GetRentalListResponse> getAll() {
@@ -54,21 +56,13 @@ public class RentalManager implements RentalService {
     public void add(AddRentalRequest addRentalRequest) {
 
         // Car id kontrolü
-        GetCarResponse getCarResponse = carService.getById(addRentalRequest.getCarId());
-        if (getCarResponse == null) {
-            throw new RuntimeException(addRentalRequest.getCarId() + " id'ye sahip araç sistemde yoktur.");
-        }
+        carService.getById(addRentalRequest.getCarId());
+
         // Customer id kontrolü
-        GetCustomerResponse getCustomerResponse = customerService.getById(addRentalRequest.getCustomerId());
-        if (getCustomerResponse == null) {
-            throw new RuntimeException(addRentalRequest.getCustomerId() + " id'ye sahip müşteri sistemde yoktur.");
-        }
+        customerService.getById(addRentalRequest.getCustomerId());
 
         // Employee id kontrolü
-        GetEmployeeResponse getEmployeeResponse = employeeService.getById(addRentalRequest.getEmployeeId());
-        if (getEmployeeResponse == null) {
-            throw new RuntimeException(addRentalRequest.getEmployeeId() + " id'ye sahip çalışan sistemde yoktur.");
-        }
+        employeeService.getById(addRentalRequest.getEmployeeId());
 
         // Başlangıç tarihi kontrolü
         if(addRentalRequest.getStartDate().isBefore(LocalDate.now())){
@@ -104,26 +98,17 @@ public class RentalManager implements RentalService {
     @Override
     public void update(UpdateRentalRequest updateRentalRequest) {
 
-        // Sipariş id kontrolü
-        if (!(rentalRepository.findById(updateRentalRequest.getId()).isPresent())) {
-            throw new RuntimeException(updateRentalRequest.getId() + " nolu id'ye sahip araç bulunmamaktadır.");
-        }
+        // Rental id kontrolü
+        rentalBusinessRulesService.existsById(updateRentalRequest.getId());
+
         // Car id kontrolü
-        GetCarResponse getCarResponse = carService.getById(updateRentalRequest.getCarId());
-        if (getCarResponse == null) {
-            throw new RuntimeException(updateRentalRequest.getCarId() + " id'ye sahip araç sistemde yoktur.");
-        }
+        carService.getById(updateRentalRequest.getCarId());
+
         // Customer id kontrolü
-        GetCustomerResponse getCustomerResponse = customerService.getById(updateRentalRequest.getCustomerId());
-        if (getCustomerResponse == null) {
-            throw new RuntimeException(updateRentalRequest.getCustomerId() + " id'ye sahip müşteri sistemde yoktur.");
-        }
+        customerService.getById(updateRentalRequest.getCustomerId());
 
         // Employee id kontrolü
-        GetEmployeeResponse getEmployeeResponse = employeeService.getById(updateRentalRequest.getEmployeeId());
-        if (getEmployeeResponse == null) {
-            throw new RuntimeException(updateRentalRequest.getEmployeeId() + " id'ye sahip çalışan sistemde yoktur.");
-        }
+        employeeService.getById(updateRentalRequest.getEmployeeId());
 
         // Başlangıç tarihi kontrolü
         if(updateRentalRequest.getStartDate().isBefore(LocalDate.now())){
