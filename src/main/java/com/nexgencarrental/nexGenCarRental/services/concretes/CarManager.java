@@ -1,9 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.Car;
-import com.nexgencarrental.nexGenCarRental.entities.Color;
-import com.nexgencarrental.nexGenCarRental.entities.Model;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
@@ -12,18 +10,10 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequ
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesService;
-import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRulesService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

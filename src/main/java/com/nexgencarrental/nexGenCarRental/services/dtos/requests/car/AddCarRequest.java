@@ -1,10 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.car;
 
-import com.nexgencarrental.nexGenCarRental.entities.Model;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModelRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

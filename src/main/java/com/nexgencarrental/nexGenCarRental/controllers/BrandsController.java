@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
-import com.nexgencarrental.nexGenCarRental.entities.Brand;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;

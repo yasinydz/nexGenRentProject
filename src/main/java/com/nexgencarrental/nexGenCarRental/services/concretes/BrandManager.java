@@ -1,7 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.Brand;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Brand;
 import com.nexgencarrental.nexGenCarRental.repositories.BrandRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.*;

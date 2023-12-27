@@ -1,9 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.Color;
-import com.nexgencarrental.nexGenCarRental.entities.Rental;
-import com.nexgencarrental.nexGenCarRental.entities.User;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;

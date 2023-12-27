@@ -1,6 +1,6 @@
-package com.nexgencarrental.nexGenCarRental.entities;
+package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Car {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Car extends BaseEntity {
 
     @Column(name ="kilometer")
     private double kilometer;
