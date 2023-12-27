@@ -22,4 +22,5 @@ public class Brand extends BaseEntity {
     private List<Model> models;
 
 
+
 }

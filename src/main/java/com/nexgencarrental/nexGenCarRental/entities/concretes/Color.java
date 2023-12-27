@@ -21,6 +21,5 @@ public class Color extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "color")
-    @JsonIgnore
     private List<Car> cars;
 }

@@ -24,6 +24,5 @@ public class Employee extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "employee")
-    @JsonIgnore
     private List<Rental> rentals;
 }
