@@ -56,7 +56,7 @@ public class CarManager implements CarService {
 
 
         // Color id kontrolü
-        colorService.getColorById(addCarRequest.getColorId());
+        colorService.getById(addCarRequest.getColorId());
 
         // Boşlukları silerek temizlenmiş plaka değerini al
         String cleanedPlate = addCarRequest.getPlate().replaceAll("\\s", "");
@@ -82,7 +82,7 @@ public class CarManager implements CarService {
 
 
         // Color id kontrolü
-        colorService.getColorById(updateCarRequest.getColorId());
+        colorService.getById(updateCarRequest.getColorId());
 
 
         // Araç id kontrolü
