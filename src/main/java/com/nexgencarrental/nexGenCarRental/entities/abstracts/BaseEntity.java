@@ -13,7 +13,7 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-/*    @Column(name = "created_date")
+    @Column(name = "created_date")
     private LocalDate createdDate;
 
     @Column(name = "updated_date", nullable = true)
@@ -27,5 +27,5 @@ public abstract class BaseEntity {
     @PreUpdate
     private void beforeUpdate() {
         updatedDate = LocalDate.now();
-    }*/
+    }
 }
