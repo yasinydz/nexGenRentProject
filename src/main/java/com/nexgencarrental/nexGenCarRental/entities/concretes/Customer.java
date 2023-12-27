@@ -1,6 +1,7 @@
-package com.nexgencarrental.nexGenCarRental.entities;
+package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,24 +10,23 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name="employees")
+@Table(name="customers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Customer extends BaseEntity {
 
-    @Column(name = "salary")
-    private double salary;
+    @Column(name = "nationality_id",unique = true)
+    private String nationalityId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Rental> rentals;
+
+
+
 }

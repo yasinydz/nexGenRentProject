@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.brand;
 
-import com.nexgencarrental.nexGenCarRental.entities.Brand;
 import com.nexgencarrental.nexGenCarRental.repositories.BrandRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

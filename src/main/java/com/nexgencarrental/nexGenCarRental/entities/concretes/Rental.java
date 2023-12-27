@@ -1,5 +1,9 @@
-package com.nexgencarrental.nexGenCarRental.entities;
+package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
+import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,11 +16,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rental {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Rental extends BaseEntity {
 
     @Column(name = "start_date")
     private LocalDate startDate;

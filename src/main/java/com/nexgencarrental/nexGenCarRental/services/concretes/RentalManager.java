@@ -1,9 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.Car;
-import com.nexgencarrental.nexGenCarRental.entities.Model;
-import com.nexgencarrental.nexGenCarRental.entities.Rental;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
@@ -11,12 +9,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;

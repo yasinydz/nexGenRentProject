@@ -1,6 +1,8 @@
-package com.nexgencarrental.nexGenCarRental.entities;
+package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Brand;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,12 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Model {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+public class Model extends BaseEntity {
     @Column(name = "name")
     private String name;
 

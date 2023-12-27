@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
-import com.nexgencarrental.nexGenCarRental.entities.Color;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.UpdateColorRequest;
