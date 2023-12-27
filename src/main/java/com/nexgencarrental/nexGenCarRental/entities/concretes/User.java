@@ -31,11 +31,11 @@ public class User extends BaseEntity {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Customer> customers;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Employee> employees;
+
+
 
 }
