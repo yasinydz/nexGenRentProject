@@ -1,4 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.employee;
 
-public interface EmployeeBusinessRulesService {
+import com.nexgencarrental.nexGenCarRental.services.rules.base.BaseRules;
+
+public interface EmployeeBusinessRulesService extends BaseRules {
 }
