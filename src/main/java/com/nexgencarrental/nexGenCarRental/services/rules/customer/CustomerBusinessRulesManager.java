@@ -1,9 +1,16 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.customer;
 
+import com.nexgencarrental.nexGenCarRental.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CustomerBusinessRulesManager {
+public class CustomerBusinessRulesManager implements CustomerBusinessRulesService {
+    CustomerRepository customerRepository;
+
+    @Override
+    public void existsById(int id) {
+
+    }
 }
