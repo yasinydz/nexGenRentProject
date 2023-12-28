@@ -15,4 +15,9 @@ public class UserBusinessRulesManager implements UserBusinessRulesService {
         }
 
     }
+
+    @Override
+    public void existsByName(String name) {
+
+    }
 }

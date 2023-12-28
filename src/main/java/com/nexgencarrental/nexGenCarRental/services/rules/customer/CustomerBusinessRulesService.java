@@ -1,4 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.customer;
 
-public interface CustomerBusinessRulesService {
+import com.nexgencarrental.nexGenCarRental.services.rules.base.BaseRules;
+
+public interface CustomerBusinessRulesService extends BaseRules {
 }
