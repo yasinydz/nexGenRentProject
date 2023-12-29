@@ -26,12 +26,12 @@ public class CustomersController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddCustomerRequest addCustomerRequest) {
-        this.customerService.add(addCustomerRequest);
+        this.customerService.customAdd(addCustomerRequest);
     }
 
     @PutMapping("/update")
     public void update(@RequestBody @Valid UpdateCustomerRequest updateCustomerRequest){
-        customerService.update(updateCustomerRequest);
+        customerService.customUpdate(updateCustomerRequest);
     }
 
     @DeleteMapping("{id}")

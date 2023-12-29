@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest, UpdateCarRequest> implements CarService{
     private final ModelService modelService;
     private final ColorService colorService;
-    private CarBusinessRulesService carBusinessRulesService;
+    private final CarBusinessRulesService carBusinessRulesService;
 
     public CarManager(CarRepository repository, ModelMapperService modelMapperService, ModelService modelService, ColorService colorService, CarBusinessRulesService carBusinessRulesService) {
         super(repository, modelMapperService, GetCarResponse.class, GetCarListResponse.class, Car.class, AddCarRequest.class, UpdateCarRequest.class);
