@@ -1,51 +1,62 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.*;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.stream.Collectors;
-
-@AllArgsConstructor
 @Service
-public class RentalManager implements RentalService {
-    private final RentalRepository rentalRepository;
-    private final ModelMapperService modelMapperService;
+public class RentalManager extends BaseManager <
+        Rental,
+        RentalRepository,
+        GetRentalResponse,
+        GetRentalListResponse,
+        AddRentalRequest,
+        UpdateRentalRequest
+        > implements RentalService{
     private final CarService carService;
     private final CustomerService customerService;
     private final EmployeeService employeeService;
     private final RentalBusinessRulesService rentalBusinessRulesService;
 
-    @Override
-    public List<GetRentalListResponse> getAll() {
-        return rentalRepository.findAll().stream()
-                .map(rental -> modelMapperService.forResponse()
-                        .map(rental, GetRentalListResponse.class)).collect(Collectors.toList());
+    public RentalManager(
+            RentalRepository repository,
+            ModelMapperService modelMapperService,
+            CarService carService, CustomerService customerService,
+            EmployeeService employeeService,
+            RentalBusinessRulesService rentalBusinessRulesService) {
+        super(repository,
+                modelMapperService,
+                GetRentalResponse.class,
+                GetRentalListResponse.class,
+                Rental.class,
+                AddRentalRequest.class,
+                UpdateRentalRequest.class);
+        this.carService = carService;
+        this.customerService = customerService;
+        this.employeeService = employeeService;
+        this.rentalBusinessRulesService = rentalBusinessRulesService;
     }
-
     @Override
-    public GetRentalResponse getById(int id) {
-        return rentalRepository.findById(id)
-                .map(rental -> modelMapperService.forResponse().map(rental, GetRentalResponse.class))
-                .orElseThrow();
+    public void customAdd(AddRentalRequest addRentalRequest) {
+        carService.getById(addRentalRequest.getCarId()); // Car id kontrolü
+        customerService.getById(addRentalRequest.getCustomerId()); // Customer id kontrolü
+        employeeService.getById(addRentalRequest.getEmployeeId()); // Employee id kontrolü
+        add(addCarRequest, Car.class);
+
     }
-
     @Override
+    public void customUpdate(UpdateRentalRequest updateRentalRequest) {
+
+    }
+   /* @Override
     public void add(AddRentalRequest addRentalRequest) {
 
         // Car id kontrolü
@@ -133,12 +144,6 @@ public class RentalManager implements RentalService {
         addRental.setReturnDate(null);
         rentalRepository.save(addRental);
 
-    }
+    }*/
 
-    @Override
-    public void delete(int id) {
-        Rental deleteRental = rentalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip sipariş bulunamadı."));
-        rentalRepository.delete(deleteRental);
-        }
-    }
+}

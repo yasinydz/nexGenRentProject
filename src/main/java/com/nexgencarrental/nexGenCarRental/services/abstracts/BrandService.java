@@ -7,7 +7,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBr
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 
-public interface BrandService extends BaseService<Brand, BrandRepository, GetBrandResponse, GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> {
+public interface BrandService extends BaseService<Brand, BrandRepository, GetBrandResponse,
+        GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> {
     void customAdd(AddBrandRequest addBrandRequest);
     void customUpdate(UpdateBrandRequest updateBrandRequest);
 }

@@ -11,7 +11,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetMode
 
 import java.util.List;
 
-public interface ModelService extends BaseService<Model, ModelRepository, GetModelResponse, GetModelListResponse, AddModelRequest, UpdateModelRequest> {
+public interface ModelService extends BaseService<Model, ModelRepository, GetModelResponse,
+        GetModelListResponse, AddModelRequest, UpdateModelRequest> {
     void customAdd(AddModelRequest addModelRequest);
     void customUpdate(UpdateModelRequest updateModelRequest);
 }

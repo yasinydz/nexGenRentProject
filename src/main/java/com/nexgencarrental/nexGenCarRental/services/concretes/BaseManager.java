@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, A, U> implements BaseService<T, R, G, L, A, U> {
+public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
+        G, L, A, U> implements BaseService<T, R, G, L, A, U> {
 
     public R repository;
     public ModelMapperService modelMapperService;
