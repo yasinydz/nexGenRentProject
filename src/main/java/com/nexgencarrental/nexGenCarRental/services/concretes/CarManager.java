@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
@@ -14,12 +15,52 @@ import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesSe
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest, UpdateCarRequest>{
-    public CarManager(CarRepository repository, ModelMapperService modelMapperService, Class<GetCarResponse> responseType, Class<GetCarListResponse> listResponseType, Class<Car> entityClass, Class<AddCarRequest> requestType, Class<UpdateCarRequest> updateRequestType) {
-        super(repository, modelMapperService, responseType, listResponseType, entityClass, requestType, updateRequestType);
+public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest, UpdateCarRequest> implements CarService{
+    private final ModelService modelService;
+    private final ColorService colorService;
+    private CarBusinessRulesService carBusinessRulesService;
+
+    public CarManager(CarRepository repository, ModelMapperService modelMapperService, ModelService modelService, ColorService colorService, CarBusinessRulesService carBusinessRulesService) {
+        super(repository, modelMapperService, GetCarResponse.class, GetCarListResponse.class, Car.class, AddCarRequest.class, UpdateCarRequest.class);
+        this.modelService = modelService;
+        this.colorService = colorService;
+        this.carBusinessRulesService = carBusinessRulesService;
+        this.repository = repository;
+    }
+
+    @Override
+    public void customAdd(AddCarRequest addCarRequest) {
+        // Model id kontrolü
+        modelService.getById(addCarRequest.getModelId());
+
+        // Color id kontrolü
+        colorService.getById(addCarRequest.getColorId());
+
+        // Boşlukları silerek temizlenmiş plaka değerini al
+        String cleanedPlate = addCarRequest.getPlate().replaceAll("\\s", "");
+
+        // CarBusinessRulesManager kullanarak iş kurallarını kontrol etme
+        carBusinessRulesService.validateAddCar(cleanedPlate);
+
+        // Yeni aracın oluşturulması ve kaydedilmesi
+        Car addCar = modelMapperService.forRequest().map(addCarRequest, Car.class);
+        addCar.setPlate(cleanedPlate);
+        repository.save(addCar);
+    }
+
+    @Override
+    public void customUpdate(UpdateCarRequest updateCarRequest) {
+        // Model id kontrolü
+        modelService.getById(updateCarRequest.getModelId());
+
+        // Color id kontrolü
+        colorService.getById(updateCarRequest.getColorId());
+
+        // CarBusinessRulesManager kullanarak iş kurallarını kontrol etme
+        carBusinessRulesService.validateUpdateCar(updateCarRequest.getId());
+
+        // Yeni aracın güncellenmesi ve kaydedilmesi
+        update(updateCarRequest, Car.class);
     }
 }
