@@ -17,8 +17,8 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     private UserBusinessRulesService userBusinessRulesService;
     private ModelMapperService modelMapperService;
 
-    public UserManager(UserRepository repository, ModelMapperService modelMapperService, Class<GetUserResponse> responseType, Class<GetUserListResponse> listResponseType, Class<User> entityClass, Class<AddUserRequest> requestType, Class<UpdateUserRequest> updateRequestType) {
-        super(repository, modelMapperService, responseType, listResponseType, entityClass, requestType, updateRequestType);
+    public UserManager(UserRepository repository, ModelMapperService modelMapperService, UserBusinessRulesService brandBusinessRulesService) {
+        super(repository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class, AddUserRequest.class, UpdateUserRequest.class);
     }
 
     @Override

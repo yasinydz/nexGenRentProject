@@ -8,17 +8,18 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEm
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.employee.EmployeeBusinessRulesService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, GetEmployeeResponse, GetEmployeeListResponse, AddEmployeeRequest, UpdateEmployeeRequest> implements EmployeeService {
-    private final EmployeeRepository employeeRepository;
-    private final ModelMapperService modelMapperService;
+    //private final EmployeeRepository employeeRepository;
+    //private final ModelMapperService modelMapperService;
 
-    public EmployeeManager(EmployeeRepository repository, ModelMapperService modelMapperService, Class<GetEmployeeResponse> responseType, Class<GetEmployeeListResponse> listResponseType, Class<Employee> entityClass, Class<AddEmployeeRequest> requestType, Class<UpdateEmployeeRequest> updateRequestType, EmployeeRepository employeeRepository, ModelMapperService modelMapperService1) {
-        super(repository, modelMapperService, responseType, listResponseType, entityClass, requestType, updateRequestType);
-        this.employeeRepository = employeeRepository;
-        this.modelMapperService = modelMapperService1;
+    public EmployeeManager(EmployeeRepository repository, ModelMapperService modelMapperService, EmployeeBusinessRulesService employeeBusinessRulesService) {
+        super(repository, modelMapperService, GetEmployeeResponse.class, GetEmployeeListResponse.class, Employee.class, AddEmployeeRequest.class, UpdateEmployeeRequest.class);
+        //this.employeeRepository = employeeRepository;
+        this.modelMapperService = modelMapperService;
     }
 
     @Override
