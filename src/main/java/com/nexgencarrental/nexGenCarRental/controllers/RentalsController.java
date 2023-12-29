@@ -27,11 +27,11 @@ public class RentalsController {
     }
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void customAdd(@RequestBody @Valid AddRentalRequest addRentalRequest) {
+    public void add(@RequestBody @Valid AddRentalRequest addRentalRequest) {
         rentalService.customAdd(addRentalRequest);
     }
     @PutMapping()
-    public void customUpdate(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
+    public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
         rentalService.customUpdate(updateRentalRequest);
     }
     @DeleteMapping("{id}")
