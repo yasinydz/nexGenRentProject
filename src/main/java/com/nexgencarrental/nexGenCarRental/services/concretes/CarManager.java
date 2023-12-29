@@ -57,10 +57,18 @@ public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse,
         // Color id kontrolü
         colorService.getById(updateCarRequest.getColorId());
 
+        //Araç id kontrolü
+        carBusinessRulesService.existsById(updateCarRequest.getId());
+
+        // Boşlukları silerek temizlenmiş plaka değerini al
+        String cleanedPlate = updateCarRequest.getPlate().replaceAll("\\s", "");
+
         // CarBusinessRulesManager kullanarak iş kurallarını kontrol etme
         carBusinessRulesService.validateUpdateCar(updateCarRequest.getId());
 
-        // Yeni aracın güncellenmesi ve kaydedilmesi
-        update(updateCarRequest, Car.class);
+        // Yeni aracın oluşturulması ve güncellenmesi
+        Car addCar = modelMapperService.forRequest().map(updateCarRequest, Car.class);
+        addCar.setPlate(cleanedPlate);
+        repository.save(addCar);
     }
 }

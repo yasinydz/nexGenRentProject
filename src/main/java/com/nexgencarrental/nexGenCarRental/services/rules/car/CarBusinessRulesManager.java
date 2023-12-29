@@ -29,7 +29,7 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     public void validateUpdateCar(int id) {
         // Araç id kontrolü
         if (!carRepository.existsById(id)) {
-            throw new RuntimeException("Bu id'ye sahip araç bulunamadı.");
+            throw new RuntimeException("No vehicles with this id were found.");
         }
     }
 }
