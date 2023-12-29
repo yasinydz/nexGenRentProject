@@ -15,12 +15,4 @@ public class BrandBusinessRulesManager implements BrandBusinessRulesService {
             throw new RuntimeException("The Brand name is already exists!");
         }
     }
-
-    @Override
-    public void existsById(int id) {
-
-        if(!brandRepository.existsById(id)){
-            throw new RuntimeException("The Brand with " + id + " the ID number cannot be found in the system.");
-        }
-    }
 }

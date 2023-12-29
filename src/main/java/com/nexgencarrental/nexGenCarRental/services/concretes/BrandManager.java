@@ -11,12 +11,27 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandResponse, GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> implements BrandService {
+public class BrandManager extends BaseManager<
+        Brand,
+        BrandRepository,
+        GetBrandResponse,
+        GetBrandListResponse,
+        AddBrandRequest,
+        UpdateBrandRequest
+        > implements BrandService {
 
     private final BrandBusinessRulesService brandBusinessRulesService;
 
-    public BrandManager(BrandRepository repository, ModelMapperService modelMapperService, BrandBusinessRulesService brandBusinessRulesService) {
-        super(repository, modelMapperService, GetBrandResponse.class, GetBrandListResponse.class, Brand.class, AddBrandRequest.class, UpdateBrandRequest.class);
+    public BrandManager(BrandRepository repository,
+                        ModelMapperService modelMapperService,
+                        BrandBusinessRulesService brandBusinessRulesService) {
+        super(repository,
+                modelMapperService,
+                GetBrandResponse.class,
+                GetBrandListResponse.class,
+                Brand.class,
+                AddBrandRequest.class,
+                UpdateBrandRequest.class);
         this.brandBusinessRulesService = brandBusinessRulesService;
     }
     @Override
@@ -26,7 +41,7 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
     }
     @Override
     public void customUpdate(UpdateBrandRequest updateBrandRequest) {
-        brandBusinessRulesService.existsById(updateBrandRequest.getId());
+        getById(updateBrandRequest.getId());
         brandBusinessRulesService.existsByName(updateBrandRequest.getName());
         update(updateBrandRequest, Brand.class);
     }
