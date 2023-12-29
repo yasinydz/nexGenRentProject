@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddEmployeeRequest {
     private double salary;
+    private int userId;
 }
