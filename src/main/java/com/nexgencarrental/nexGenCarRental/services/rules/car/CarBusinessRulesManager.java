@@ -22,7 +22,7 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     public void validateAddCar(String plate) {
         // Aynı plakada başka bir araç olup olmadığını kontrol etme
         if (carRepository.existsByPlate(plate)) {
-            throw new RuntimeException("Sistemde bu plaka bulunuyor, farklı bir plaka giriniz.");
+            throw new RuntimeException("This license plate is in the system, enter a different license plate.");
         }
     }
     @Override
