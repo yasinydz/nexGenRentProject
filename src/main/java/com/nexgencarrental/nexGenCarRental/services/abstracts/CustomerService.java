@@ -8,7 +8,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetC
 
 import java.util.List;
 
-public interface CustomerService extends BaseService<Customer, CustomerRepository, GetCustomerResponse, GetCustomerListResponse, AddCustomerRequest, UpdateCustomerRequest>{
+public interface CustomerService extends BaseService<Customer, CustomerRepository, GetCustomerResponse,
+        GetCustomerListResponse, AddCustomerRequest, UpdateCustomerRequest>{
     void customAdd(AddCustomerRequest addCustomerRequest);
     void customUpdate(UpdateCustomerRequest updateCustomerRequest);
 }

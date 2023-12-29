@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddCustomerRequest {
-
     private String nationalityId;
-
     private int userId;
 }

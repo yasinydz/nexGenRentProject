@@ -6,8 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class EmployeeBusinessRulesManager implements EmployeeBusinessRulesService {
-    @Override
-    public void existsById(int id) {
 
-    }
 }

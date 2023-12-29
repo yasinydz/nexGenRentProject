@@ -7,7 +7,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.UpdateCo
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
 
-public interface ColorService extends BaseService<Color, ColorRepository, GetColorResponse, GetColorListResponse, AddColorRequest, UpdateColorRequest> {
+public interface ColorService extends BaseService<Color, ColorRepository, GetColorResponse,
+        GetColorListResponse, AddColorRequest, UpdateColorRequest> {
     void customAdd(AddColorRequest addColorRequest);
     void customUpdate(UpdateColorRequest updateColorRequest);
 }

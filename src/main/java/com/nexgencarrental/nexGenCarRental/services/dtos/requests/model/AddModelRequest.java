@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddModelRequest {
     @Size(min = 2, message = "En az 2 harften oluşan bir model ismi giriniz")
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="İlk harfi BÜYÜK sonra ki harfler KÜÇÜK olacak şekilde giriniz.(Örn:'Focus'")
+    @Pattern(regexp = "^[A-Za-z][A-Za-z ]{1,13}$",message="İlk harfi BÜYÜK sonra ki harfler KÜÇÜK olacak şekilde giriniz.(Örn:'Focus'")
     private String name;
 
     @Positive(message = "Brand Id pozitif bir değer olmalıdır.")

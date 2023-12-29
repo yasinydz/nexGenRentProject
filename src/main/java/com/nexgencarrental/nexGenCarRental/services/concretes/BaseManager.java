@@ -1,6 +1,10 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +15,8 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, A, U> implements BaseService<T, R, G, L, A, U> {
+public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
+        G, L, A, U> implements BaseService<T, R, G, L, A, U> {
 
     public R repository;
     public ModelMapperService modelMapperService;
@@ -43,11 +48,37 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, 
     @Override
     public void add(A request, Class<T> entityClass) {
         T entity = modelMapperService.forRequest().map(request, entityClass);
+        if (entity instanceof Car) {
+            Car carEntity = (Car) entity;
+            carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
+        } else if (entity instanceof Customer) {
+            Customer customerEntity = (Customer) entity;
+            customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
+        } else if (entity instanceof Employee) {
+            Employee employeeEntity = (Employee) entity;
+            employeeEntity.setId(0);
+        } else if (entity instanceof Model) {
+            Model modelEntity = (Model) entity;
+            modelEntity.setId(0);
+        }
         repository.save(entity);
     }
     @Override
     public void update(U updateRequest, Class<T> entityClass) {
         T entity = modelMapperService.forRequest().map(updateRequest, entityClass);
+        if (entity instanceof Car) {
+            Car carEntity = (Car) entity;
+            carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
+        } else if (entity instanceof Customer) {
+            Customer customerEntity = (Customer) entity;
+            customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
+        } else if (entity instanceof Employee) {
+            Employee employeeEntity = (Employee) entity;
+            employeeEntity.setId(0);
+        } else if (entity instanceof Model) {
+            Model modelEntity = (Model) entity;
+            modelEntity.setId(0);
+        }
         repository.save(entity);
     }
 }

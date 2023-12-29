@@ -15,12 +15,4 @@ public class ColorBusinessRulesManager implements ColorBusinessRulesService {
             throw new RuntimeException("The Color name is already exists!");
         }
     }
-
-    @Override
-    public void existsById(int id) {
-        if(!colorRepository.existsById(id)){
-            throw new RuntimeException("The Color with " + id + " the ID number cannot be found in the system.");
-        }
-
-    }
 }
