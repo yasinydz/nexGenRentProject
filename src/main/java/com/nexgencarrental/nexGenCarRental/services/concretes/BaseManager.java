@@ -4,6 +4,7 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperSer
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,6 +56,9 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, 
         } else if (entity instanceof Employee) {
             Employee employeeEntity = (Employee) entity;
             employeeEntity.setId(0);
+        } else if (entity instanceof Model) {
+            Model modelEntity = (Model) entity;
+            modelEntity.setId(0);
         }
         repository.save(entity);
     }
@@ -67,6 +71,12 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, 
         } else if (entity instanceof Customer) {
             Customer customerEntity = (Customer) entity;
             customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
+        } else if (entity instanceof Employee) {
+            Employee employeeEntity = (Employee) entity;
+            employeeEntity.setId(0);
+        } else if (entity instanceof Model) {
+            Model modelEntity = (Model) entity;
+            modelEntity.setId(0);
         }
         repository.save(entity);
     }

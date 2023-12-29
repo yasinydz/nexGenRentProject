@@ -13,13 +13,5 @@ public class ModelBusinessRulesManager implements ModelBusinessRulesService{
         if (modelRepository.existsByName(name.trim().replaceAll("\\s", ""))){
             throw new RuntimeException("The Model name is already exists!");
         }
-
-    }
-
-    @Override
-    public void existsById(int id) {
-        if(!modelRepository.existsById(id)){
-            throw new RuntimeException("The Model with " + id + " the ID number cannot be found in the system.");
-        }
     }
 }
