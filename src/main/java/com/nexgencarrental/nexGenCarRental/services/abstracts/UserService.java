@@ -8,7 +8,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserL
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 
 
-public interface UserService extends BaseService<User, UserRepository, GetUserResponse, GetUserListResponse, AddUserRequest, UpdateUserRequest> {
-    void customAdd(AddUserRequest addUserRequest);
-    void customUpdate(UpdateUserRequest updateUserRequest);
+public interface UserService extends BaseService<User, UserRepository, GetUserResponse,
+        GetUserListResponse, AddUserRequest, UpdateUserRequest> {
 }

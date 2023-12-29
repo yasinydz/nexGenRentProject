@@ -1,8 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.car;
 
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

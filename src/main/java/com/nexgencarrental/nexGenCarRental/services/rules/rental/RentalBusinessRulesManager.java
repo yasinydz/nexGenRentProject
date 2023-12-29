@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.rental;
 
-import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import lombok.AllArgsConstructor;

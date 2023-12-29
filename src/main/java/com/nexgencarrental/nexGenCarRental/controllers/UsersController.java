@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
@@ -32,12 +33,12 @@ public class UsersController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
-        this.userService.customAdd(addUserRequest);
+        this.userService.add(addUserRequest, User.class);
     }
 
     @PutMapping("/update")
     public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest){
-        userService.customUpdate(updateUserRequest);
+        userService.update(updateUserRequest, User.class);
     }
 
     @DeleteMapping("{id}")

@@ -75,6 +75,9 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         } else if (entity instanceof Model) {
             Model modelEntity = (Model) entity;
             modelEntity.setId(0);
+        }else if (entity instanceof User) {
+            User userEntity = (User) entity;
+            getById(userEntity.getId());
         }
         repository.save(entity);
     }
