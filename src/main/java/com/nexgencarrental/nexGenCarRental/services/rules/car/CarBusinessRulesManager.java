@@ -27,9 +27,6 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     }
     @Override
     public void validateUpdateCar(int id) {
-        // Araç id kontrolü
-        if (!carRepository.existsById(id)) {
-            throw new RuntimeException("No vehicles with this id were found.");
-        }
+
     }
 }
