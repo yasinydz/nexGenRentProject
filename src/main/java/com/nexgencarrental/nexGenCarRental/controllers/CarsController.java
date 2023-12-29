@@ -28,11 +28,11 @@ public class CarsController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddCarRequest addCarRequest) {
-        this.carService.add(addCarRequest);
+        this.carService.customAdd(addCarRequest);
     }
     @PutMapping("/update")
     public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
-        this.carService.update(updateCarRequest);
+        this.carService.customUpdate(updateCarRequest);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id ) {

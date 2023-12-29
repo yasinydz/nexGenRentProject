@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
@@ -14,36 +15,24 @@ import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesSe
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-@AllArgsConstructor
-public class CarManager implements CarService {
-    private final CarRepository carRepository;
-    private ModelMapperService modelMapperService;
+public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest, UpdateCarRequest> implements CarService{
     private final ModelService modelService;
     private final ColorService colorService;
     private CarBusinessRulesService carBusinessRulesService;
-    @Override
-    public List<GetCarListResponse> getAll() {
-        return carRepository.findAll().stream()
-                .map(car -> modelMapperService.forResponse()
-                        .map(car, GetCarListResponse.class)).collect(Collectors.toList());
-    }
-    @Override
-    public GetCarResponse getById(int id) {
-        return carRepository.findById(id)
-                .map(car -> modelMapperService.forResponse().map(car, GetCarResponse.class))
-                .orElseThrow(() ->
-                        new RuntimeException(id + " girdiğiniz id'ye sahip araç sistemde bulunamıyor."));
-    }
-    @Override
-    public void add(AddCarRequest addCarRequest) {
 
+    public CarManager(CarRepository repository, ModelMapperService modelMapperService, ModelService modelService, ColorService colorService, CarBusinessRulesService carBusinessRulesService) {
+        super(repository, modelMapperService, GetCarResponse.class, GetCarListResponse.class, Car.class, AddCarRequest.class, UpdateCarRequest.class);
+        this.modelService = modelService;
+        this.colorService = colorService;
+        this.carBusinessRulesService = carBusinessRulesService;
+        this.repository = repository;
+    }
+
+    @Override
+    public void customAdd(AddCarRequest addCarRequest) {
         // Model id kontrolü
         modelService.getById(addCarRequest.getModelId());
-
 
         // Color id kontrolü
         colorService.getById(addCarRequest.getColorId());
@@ -51,50 +40,36 @@ public class CarManager implements CarService {
         // Boşlukları silerek temizlenmiş plaka değerini al
         String cleanedPlate = addCarRequest.getPlate().replaceAll("\\s", "");
 
-        // Aynı plakada başka bir araç olup olmadığını kontrol etme
-        if (carRepository.existsByPlate(cleanedPlate)) {
-            throw new RuntimeException("Sistemde bu plaka bulunuyor, farklı bir plaka giriniz.");
-        }
+        // CarBusinessRulesManager kullanarak iş kurallarını kontrol etme
+        carBusinessRulesService.validateAddCar(cleanedPlate);
 
         // Yeni aracın oluşturulması ve kaydedilmesi
         Car addCar = modelMapperService.forRequest().map(addCarRequest, Car.class);
-
-        // Temizlenmiş plaka değerini kullanarak kayıt yapma
         addCar.setPlate(cleanedPlate);
-        carRepository.save(addCar);
+        repository.save(addCar);
     }
 
     @Override
-    public void update(UpdateCarRequest updateCarRequest) {
-
+    public void customUpdate(UpdateCarRequest updateCarRequest) {
         // Model id kontrolü
         modelService.getById(updateCarRequest.getModelId());
-
 
         // Color id kontrolü
         colorService.getById(updateCarRequest.getColorId());
 
-
-        // Araç id kontrolü
+        //Araç id kontrolü
         carBusinessRulesService.existsById(updateCarRequest.getId());
 
-        // Yeni aracın güncellenmesi ve kaydedilmesi
-        Car car = this.modelMapperService.forRequest()
-                .map(updateCarRequest, Car.class);
-
-        String updatePlate = updateCarRequest.getPlate();
-
         // Boşlukları silerek temizlenmiş plaka değerini al
-        String cleanedPlate = updatePlate.replaceAll("\\s", "");
-        car.setPlate(cleanedPlate);
+        String cleanedPlate = updateCarRequest.getPlate().replaceAll("\\s", "");
 
-        carRepository.save(car);
+        // CarBusinessRulesManager kullanarak iş kurallarını kontrol etme
+        carBusinessRulesService.validateUpdateCar(updateCarRequest.getId());
 
-    }
-    @Override
-    public void delete(int id) {
-        Car deleteCar = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip araç bulunamadı."));
-        carRepository.delete(deleteCar);
+        // Yeni aracın oluşturulması ve güncellenmesi
+        Car addCar = modelMapperService.forRequest().map(updateCarRequest, Car.class);
+        addCar.setPlate(cleanedPlate);
+        repository.save(addCar);
+
     }
 }
