@@ -1,10 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
