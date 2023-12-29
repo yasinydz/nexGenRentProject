@@ -18,83 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class CarManager implements CarService {
-    private final CarRepository carRepository;
-    private ModelMapperService modelMapperService;
-    private final ModelService modelService;
-    private final ColorService colorService;
-    private CarBusinessRulesService carBusinessRulesService;
-    @Override
-    public List<GetCarListResponse> getAll() {
-        return carRepository.findAll().stream()
-                .map(car -> modelMapperService.forResponse()
-                        .map(car, GetCarListResponse.class)).collect(Collectors.toList());
-    }
-    @Override
-    public GetCarResponse getById(int id) {
-        return carRepository.findById(id)
-                .map(car -> modelMapperService.forResponse().map(car, GetCarResponse.class))
-                .orElseThrow(() ->
-                        new RuntimeException(id + " girdiğiniz id'ye sahip araç sistemde bulunamıyor."));
-    }
-    @Override
-    public void add(AddCarRequest addCarRequest) {
-
-        // Model id kontrolü
-        modelService.getById(addCarRequest.getModelId());
-
-
-        // Color id kontrolü
-        colorService.getById(addCarRequest.getColorId());
-
-        // Boşlukları silerek temizlenmiş plaka değerini al
-        String cleanedPlate = addCarRequest.getPlate().replaceAll("\\s", "");
-
-        // Aynı plakada başka bir araç olup olmadığını kontrol etme
-        if (carRepository.existsByPlate(cleanedPlate)) {
-            throw new RuntimeException("Sistemde bu plaka bulunuyor, farklı bir plaka giriniz.");
-        }
-
-        // Yeni aracın oluşturulması ve kaydedilmesi
-        Car addCar = modelMapperService.forRequest().map(addCarRequest, Car.class);
-
-        // Temizlenmiş plaka değerini kullanarak kayıt yapma
-        addCar.setPlate(cleanedPlate);
-        carRepository.save(addCar);
-    }
-
-    @Override
-    public void update(UpdateCarRequest updateCarRequest) {
-
-        // Model id kontrolü
-        modelService.getById(updateCarRequest.getModelId());
-
-
-        // Color id kontrolü
-        colorService.getById(updateCarRequest.getColorId());
-
-
-        // Araç id kontrolü
-        carBusinessRulesService.existsById(updateCarRequest.getId());
-
-        // Yeni aracın güncellenmesi ve kaydedilmesi
-        Car car = this.modelMapperService.forRequest()
-                .map(updateCarRequest, Car.class);
-
-        String updatePlate = updateCarRequest.getPlate();
-
-        // Boşlukları silerek temizlenmiş plaka değerini al
-        String cleanedPlate = updatePlate.replaceAll("\\s", "");
-        car.setPlate(cleanedPlate);
-
-        carRepository.save(car);
-
-    }
-    @Override
-    public void delete(int id) {
-        Car deleteCar = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bu id'ye sahip araç bulunamadı."));
-        carRepository.delete(deleteCar);
+public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest, UpdateCarRequest>{
+    public CarManager(CarRepository repository, ModelMapperService modelMapperService, Class<GetCarResponse> responseType, Class<GetCarListResponse> listResponseType, Class<Car> entityClass, Class<AddCarRequest> requestType, Class<UpdateCarRequest> updateRequestType) {
+        super(repository, modelMapperService, responseType, listResponseType, entityClass, requestType, updateRequestType);
     }
 }
