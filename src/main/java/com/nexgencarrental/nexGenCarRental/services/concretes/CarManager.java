@@ -70,5 +70,6 @@ public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse,
         Car addCar = modelMapperService.forRequest().map(updateCarRequest, Car.class);
         addCar.setPlate(cleanedPlate);
         repository.save(addCar);
+
     }
 }
