@@ -42,7 +42,7 @@ public class CarManager implements CarService {
     public void add(AddCarRequest addCarRequest) {
 
         // Model id kontrolü
-        modelService.getModelById(addCarRequest.getModelId());
+        modelService.getById(addCarRequest.getModelId());
 
 
         // Color id kontrolü
@@ -68,7 +68,7 @@ public class CarManager implements CarService {
     public void update(UpdateCarRequest updateCarRequest) {
 
         // Model id kontrolü
-        modelService.getModelById(updateCarRequest.getModelId());
+        modelService.getById(updateCarRequest.getModelId());
 
 
         // Color id kontrolü
