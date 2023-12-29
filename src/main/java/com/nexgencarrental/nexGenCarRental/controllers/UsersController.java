@@ -32,12 +32,12 @@ public class UsersController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
-        this.userService.add(addUserRequest);
+        this.userService.customAdd(addUserRequest);
     }
 
     @PutMapping("/update")
     public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest){
-        userService.update(updateUserRequest);
+        userService.customUpdate(updateUserRequest);
     }
 
     @DeleteMapping("{id}")

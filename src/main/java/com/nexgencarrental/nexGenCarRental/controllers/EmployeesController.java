@@ -28,12 +28,12 @@ public class EmployeesController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddEmployeeRequest addEmployeeRequest) {
-        this.employeeService.add(addEmployeeRequest);
+        this.employeeService.customAdd(addEmployeeRequest);
     }
 
     @PutMapping("/update")
     public void update(@RequestBody @Valid UpdateEmployeeRequest updateEmployeeRequest){
-        employeeService.update(updateEmployeeRequest);
+        employeeService.customUpdate(updateEmployeeRequest);
     }
 
     @DeleteMapping("{id}")

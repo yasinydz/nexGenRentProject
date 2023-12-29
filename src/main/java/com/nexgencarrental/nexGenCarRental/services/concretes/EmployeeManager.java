@@ -1,48 +1,34 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.repositories.CustomerRepository;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import com.nexgencarrental.nexGenCarRental.repositories.EmployeeRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
-import lombok.AllArgsConstructor;
+import com.nexgencarrental.nexGenCarRental.services.rules.employee.EmployeeBusinessRulesService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@AllArgsConstructor
-public class EmployeeManager implements EmployeeService {
-    private final EmployeeRepository employeeRepository;
-    private final ModelMapperService modelMapperService;
-    @Override
-    public List<GetEmployeeListResponse> getAll() {
-        return null;
+public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, GetEmployeeResponse, GetEmployeeListResponse, AddEmployeeRequest, UpdateEmployeeRequest> implements EmployeeService {
+    //private final EmployeeRepository employeeRepository;
+    //private final ModelMapperService modelMapperService;
+
+    public EmployeeManager(EmployeeRepository repository, ModelMapperService modelMapperService, EmployeeBusinessRulesService employeeBusinessRulesService) {
+        super(repository, modelMapperService, GetEmployeeResponse.class, GetEmployeeListResponse.class, Employee.class, AddEmployeeRequest.class, UpdateEmployeeRequest.class);
+        //this.employeeRepository = employeeRepository;
+        this.modelMapperService = modelMapperService;
     }
 
     @Override
-    public GetEmployeeResponse getById(int id) {
-        return employeeRepository.findById(id)
-                .map(employee -> modelMapperService.forResponse().map(employee, GetEmployeeResponse.class))
-                .orElseThrow();
-    }
-
-    @Override
-    public void add(AddEmployeeRequest addEmployeeRequest) {
+    public void customAdd(AddEmployeeRequest addEmployeeRequest) {
 
     }
 
     @Override
-    public void update(UpdateEmployeeRequest updateEmployeeRequest) {
-
-    }
-
-    @Override
-    public void delete(int id) {
+    public void customUpdate(UpdateEmployeeRequest updateEmployeeRequest) {
 
     }
 }

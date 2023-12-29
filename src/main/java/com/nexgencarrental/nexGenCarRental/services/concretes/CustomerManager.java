@@ -1,49 +1,39 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
 import com.nexgencarrental.nexGenCarRental.repositories.CustomerRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.AddCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.UpdateCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
-import lombok.AllArgsConstructor;
+
+import com.nexgencarrental.nexGenCarRental.services.rules.customer.CustomerBusinessRulesService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
-@AllArgsConstructor
-public class CustomerManager implements CustomerService {
-    private final CustomerRepository customerRepository;
-    private final ModelMapperService modelMapperService;
+public class CustomerManager extends BaseManager<Customer, CustomerRepository, GetCustomerResponse, GetCustomerListResponse, AddCustomerRequest, UpdateCustomerRequest> implements CustomerService {
 
-    @Override
-    public List<GetCustomerListResponse> getAll() {
-        return null;
+    private final CustomerBusinessRulesService customerBusinessRulesService = null;
+
+
+    public CustomerManager(CustomerRepository repository, ModelMapperService modelMapperService, CustomerBusinessRulesService customerBusinessRulesService) {
+        super(repository, modelMapperService, GetCustomerResponse.class, GetCustomerListResponse.class, Customer.class, AddCustomerRequest.class, UpdateCustomerRequest.class);
+        //this.customerBusinessRulesService = customerBusinessRulesService;
     }
 
     @Override
-    public GetCustomerResponse getById(int id) {
-        return customerRepository.findById(id)
-                .map(customer -> modelMapperService.forResponse().map(customer, GetCustomerResponse.class))
-                .orElseThrow();
+    public void customAdd(AddCustomerRequest addCustomerRequest) {
+        /*customerBusinessRulesService.existsById(addCustomerRequest.getUserId());
+        add(addCustomerRequest, Customer.class);*/
     }
 
     @Override
-    public void add(AddCustomerRequest addCustomerRequest) {
-
-    }
-
-    @Override
-    public void update(UpdateCustomerRequest updateCustomerRequest) {
-
-    }
-
-    @Override
-    public void delete(int id) {
-
+    public void customUpdate(UpdateCustomerRequest updateCustomerRequest) {
+        /*customerBusinessRulesService.existsById(updateCustomerRequest.getUserId());
+        update(updateCustomerRequest, Customer.class);*/
     }
 }

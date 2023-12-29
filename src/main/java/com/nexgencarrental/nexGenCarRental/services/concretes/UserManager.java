@@ -9,40 +9,25 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUse
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
-@AllArgsConstructor
-public class UserManager implements UserService {
+public class UserManager extends BaseManager<User, UserRepository, GetUserResponse, GetUserListResponse, AddUserRequest, UpdateUserRequest> implements UserService {
     private UserRepository userRepository;
     private UserBusinessRulesService userBusinessRulesService;
     private ModelMapperService modelMapperService;
-    @Override
-    public List<GetUserListResponse> getAll() {
-        return null;
+
+    public UserManager(UserRepository repository, ModelMapperService modelMapperService, UserBusinessRulesService brandBusinessRulesService) {
+        super(repository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class, AddUserRequest.class, UpdateUserRequest.class);
     }
 
     @Override
-    public GetUserResponse getById(int id) {
-        return null;
-    }
-
-    @Override
-    public void add(AddUserRequest addUserRequest) {
-        User addUser = modelMapperService.forRequest().map(addUserRequest, User.class);
-        userRepository.save(addUser);
+    public void customAdd(AddUserRequest addUserRequest) {
 
     }
 
     @Override
-    public void update(UpdateUserRequest updateUserRequest) {
-
-    }
-
-    @Override
-    public void delete(int id) {
+    public void customUpdate(UpdateUserRequest updateUserRequest) {
 
     }
 }
