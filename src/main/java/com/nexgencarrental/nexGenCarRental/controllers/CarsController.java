@@ -32,7 +32,7 @@ public class CarsController {
     }
     @PutMapping("/update")
     public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
-        this.carService.customUpdate(updateCarRequest);
+        carService.customUpdate(updateCarRequest);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id ) {

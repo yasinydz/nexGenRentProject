@@ -1,6 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,11 +44,19 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, 
     @Override
     public void add(A request, Class<T> entityClass) {
         T entity = modelMapperService.forRequest().map(request, entityClass);
+        if (entity instanceof Car) {
+            Car carEntity = (Car) entity;
+            carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
+        }
         repository.save(entity);
     }
     @Override
     public void update(U updateRequest, Class<T> entityClass) {
         T entity = modelMapperService.forRequest().map(updateRequest, entityClass);
+        if (entity instanceof Car) {
+            Car carEntity = (Car) entity;
+            carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
+        }
         repository.save(entity);
     }
 }
