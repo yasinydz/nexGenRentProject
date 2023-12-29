@@ -25,11 +25,4 @@ public class ModelBusinessRulesManager implements ModelBusinessRulesService {
             throw new RuntimeException("The Model with " + id + " the ID number cannot be found in the system.");
         }
     }
-
-    @Override
-    public void canDeleteModel(int id) {
-        if (carRepository.existsById(id)) {
-            throw new RuntimeException("There are vehicles linked to this model. " + id + " You cannot delete the model.");
-        }
-    }
 }
