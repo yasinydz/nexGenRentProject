@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,6 +48,9 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>, G, L, 
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
             carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
+        } else if (entity instanceof Customer) {
+            Customer customerEntity = (Customer) entity;
+            customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
         }
         repository.save(entity);
     }

@@ -45,7 +45,6 @@ public class CarManager extends BaseManager <
         this.modelService = modelService;
         this.colorService = colorService;
         this.carBusinessRulesService = carBusinessRulesService;
-        this.repository = repository;
     }
 
     @Override
