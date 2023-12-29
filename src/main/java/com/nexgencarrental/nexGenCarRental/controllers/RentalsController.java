@@ -28,11 +28,11 @@ public class RentalsController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddRentalRequest addRentalRequest) {
-        rentalService.add(addRentalRequest);
+        rentalService.customAdd(addRentalRequest);
     }
     @PutMapping()
     public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
-        rentalService.update(updateRentalRequest);
+        rentalService.customUpdate(updateRentalRequest);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id ) {
