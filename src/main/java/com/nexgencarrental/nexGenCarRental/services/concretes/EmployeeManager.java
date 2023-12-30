@@ -42,7 +42,6 @@ public class EmployeeManager extends BaseManager<
     }
     @Override
     public void customUpdate(UpdateEmployeeRequest updateEmployeeRequest) {
-        getById(updateEmployeeRequest.getId()); // Employee id kontrolü
         userService.getById(updateEmployeeRequest.getUserId()); // User id kontrolü
         update(updateEmployeeRequest, Employee.class);
     }
