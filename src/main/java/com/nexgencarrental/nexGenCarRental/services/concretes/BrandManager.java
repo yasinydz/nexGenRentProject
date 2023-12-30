@@ -41,7 +41,6 @@ public class BrandManager extends BaseManager<
     }
     @Override
     public void customUpdate(UpdateBrandRequest updateBrandRequest) {
-        getById(updateBrandRequest.getId());
         brandBusinessRulesService.existsByName(updateBrandRequest.getName());
         update(updateBrandRequest, Brand.class);
     }
