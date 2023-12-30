@@ -76,9 +76,6 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         } else if (entity instanceof Customer) {
             Customer customerEntity = (Customer) entity;
             customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
-        } else if (entity instanceof Model) {
-            Model modelEntity = (Model) entity;
-            modelEntity.setId(0);
         }
         repository.save(entity);
     }
