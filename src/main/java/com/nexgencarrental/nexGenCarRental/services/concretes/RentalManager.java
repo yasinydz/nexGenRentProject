@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.*;
@@ -17,32 +16,17 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Service
-public class RentalManager extends BaseManager <
-        Rental,
-        RentalRepository,
-        GetRentalResponse,
-        GetRentalListResponse,
-        AddRentalRequest,
-        UpdateRentalRequest
-        > implements RentalService{
+public class RentalManager extends BaseManager <Rental, RentalRepository, GetRentalResponse, GetRentalListResponse,
+        AddRentalRequest, UpdateRentalRequest> implements RentalService{
     private final CarService carService;
     private final CustomerService customerService;
     private final EmployeeService employeeService;
     private final RentalBusinessRulesService rentalBusinessRulesService;
-
-    public RentalManager(
-            RentalRepository repository,
-            ModelMapperService modelMapperService,
-            CarService carService, CustomerService customerService,
-            EmployeeService employeeService,
+    public RentalManager(RentalRepository repository, ModelMapperService modelMapperService,
+            CarService carService, CustomerService customerService, EmployeeService employeeService,
             RentalBusinessRulesService rentalBusinessRulesService) {
-        super(repository,
-                modelMapperService,
-                GetRentalResponse.class,
-                GetRentalListResponse.class,
-                Rental.class,
-                AddRentalRequest.class,
-                UpdateRentalRequest.class);
+        super(repository, modelMapperService, GetRentalResponse.class, GetRentalListResponse.class, Rental.class,
+                AddRentalRequest.class, UpdateRentalRequest.class);
         this.carService = carService;
         this.customerService = customerService;
         this.employeeService = employeeService;
@@ -77,9 +61,9 @@ public class RentalManager extends BaseManager <
 
         Rental addRental = modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
 
-        GetCarResponse carId = carService.getById(updateRentalRequest.getCarId()); // Araç kilometresi otomatik olarak id'den alıp kilometreyi çeker.
+        GetCarResponse carId = carService.getById(updateRentalRequest.getCarId()); // Araç kilometresi otomatik olarak id'den alır.
 
-        // totalPrice hesaplaması burada yapılır
+        // totalPrice kontrolü
         addRental.setTotalPrice(carId.getDailyPrice() * ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate()));
         addRental.setStartKilometer(carId.getKilometer());
         addRental.setEndKilometer(null);
@@ -87,5 +71,4 @@ public class RentalManager extends BaseManager <
 
         repository.save(addRental);
     }
-
 }

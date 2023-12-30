@@ -10,30 +10,14 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.*;
 import com.nexgencarrental.nexGenCarRental.services.rules.employee.EmployeeBusinessRulesService;
 import org.springframework.stereotype.Service;
 @Service
-public class EmployeeManager extends BaseManager<
-        Employee,
-        EmployeeRepository,
-        GetEmployeeResponse,
-        GetEmployeeListResponse,
-        AddEmployeeRequest,
-        UpdateEmployeeRequest
-        > implements EmployeeService {
+public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, GetEmployeeResponse,
+        GetEmployeeListResponse, AddEmployeeRequest, UpdateEmployeeRequest> implements EmployeeService {
     private final UserService userService;
-    private final EmployeeBusinessRulesService employeeBusinessRulesService;
-    public EmployeeManager(
-            EmployeeRepository repository,
-            ModelMapperService modelMapperService,
-            EmployeeBusinessRulesService employeeBusinessRulesService,
-            UserService userService) {
-        super(repository,
-                modelMapperService,
-                GetEmployeeResponse.class,
-                GetEmployeeListResponse.class,
-                Employee.class,
-                AddEmployeeRequest.class,
-                UpdateEmployeeRequest.class);
+    public EmployeeManager(EmployeeRepository repository, ModelMapperService modelMapperService,
+            EmployeeBusinessRulesService employeeBusinessRulesService, UserService userService) {
+        super(repository, modelMapperService, GetEmployeeResponse.class, GetEmployeeListResponse.class,
+                Employee.class, AddEmployeeRequest.class, UpdateEmployeeRequest.class);
         this.userService = userService;
-        this.employeeBusinessRulesService = employeeBusinessRulesService;
     }
     @Override
     public void customAdd(AddEmployeeRequest addEmployeeRequest) {
@@ -42,7 +26,6 @@ public class EmployeeManager extends BaseManager<
     }
     @Override
     public void customUpdate(UpdateEmployeeRequest updateEmployeeRequest) {
-        getById(updateEmployeeRequest.getId()); // Employee id kontrolü
         userService.getById(updateEmployeeRequest.getUserId()); // User id kontrolü
         update(updateEmployeeRequest, Employee.class);
     }

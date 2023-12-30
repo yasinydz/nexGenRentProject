@@ -4,6 +4,7 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperSer
 import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -60,8 +61,14 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         }
         repository.save(entity);
     }
+    @SneakyThrows
     @Override
     public void update(U updateRequest, Class<T> entityClass) {
+        Integer entityId = (Integer) updateRequest.getClass().getMethod("getId").invoke(updateRequest);
+
+        T existingEntity = repository.findById(entityId)
+                    .orElseThrow(() -> new RuntimeException(entityClass.getSimpleName() + " with ID " + entityId + " not found."));
+
         T entity = modelMapperService.forRequest().map(updateRequest, entityClass);
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
@@ -69,15 +76,6 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         } else if (entity instanceof Customer) {
             Customer customerEntity = (Customer) entity;
             customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
-        } else if (entity instanceof Employee) {
-            Employee employeeEntity = (Employee) entity;
-            employeeEntity.setId(0);
-        } else if (entity instanceof Model) {
-            Model modelEntity = (Model) entity;
-            modelEntity.setId(0);
-        }else if (entity instanceof User) {
-            User userEntity = (User) entity;
-            getById(userEntity.getId());
         }
         repository.save(entity);
     }
