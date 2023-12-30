@@ -14,35 +14,35 @@ public class RentalBusinessRulesManager implements RentalBusinessRulesService{
     public void validateAddRentalRequest(AddRentalRequest addRentalRequest) {
         // Başlangıç tarihi kontrolü
         if (addRentalRequest.getStartDate().isBefore(LocalDate.now())) {
-            throw new RuntimeException("Başlangıç tarihi " + LocalDate.now() + " , yani bugünden daha önce bir tarih olamaz");
+            throw new RuntimeException("Start date cannot be earlier than today, which is " + LocalDate.now());
         }
 
         // Bitiş tarihi kontrolü
         if (addRentalRequest.getEndDate().isBefore(addRentalRequest.getStartDate())) {
-            throw new RuntimeException("Girdiğiniz tarih, " + addRentalRequest.getStartDate() + " bu tarihden ileri bir tarih olmalıdır.");
+            throw new RuntimeException("The entered date must be after " + addRentalRequest.getStartDate());
         }
 
         // Kiralama süresi kontrolü
         if (ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate()) > 25
                 || 0 == ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate())) {
-            throw new RuntimeException("Bir araç minimum 1 gün, maksimum 25 gün kiralanabilir.");
+            throw new RuntimeException("A Car can be rented for a minimum of 1 day and a maximum of 25 days.");
         }
     }
     public void validateUpdateRentalRequest(UpdateRentalRequest updateRentalRequest) {
         // Başlangıç tarihi kontrolü
         if(updateRentalRequest.getStartDate().isBefore(LocalDate.now())){
-            throw new RuntimeException("Başlangıç tarihi " + LocalDate.now() + " , yani bugünden daha önce bir tarih olamaz");
+            throw new RuntimeException("Start date for the updated rental cannot be earlier than today, which is " + LocalDate.now());
         }
 
         // Bitiş tarihi kontrolü
         if (updateRentalRequest.getEndDate().isBefore(updateRentalRequest.getStartDate())){
-            throw new RuntimeException("Girdiğiniz tarih, " + updateRentalRequest.getStartDate() + " bu tarihden ileri bir tarih olmalıdır.");
+            throw new RuntimeException("The entered date for the updated rental must be after " + updateRentalRequest.getStartDate());
         }
 
         // Kiralama süresi kontrolü
         if (ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate())  > 25
                 || 0 == ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate())) {
-            throw new RuntimeException("Bir araç minimum 1 gün, maksimum 25 gün kiralanabilir.");
+            throw new RuntimeException("The updated rental must be for a minimum of 1 day and a maximum of 25 days.");
         }
     }
 }
