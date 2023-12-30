@@ -42,7 +42,6 @@ public class CustomerManager extends BaseManager<
     }
     @Override
     public void customUpdate(UpdateCustomerRequest updateCustomerRequest) {
-        getById(updateCustomerRequest.getId()); // Customer id kontrolü
         userService.getById(updateCustomerRequest.getUserId()); // User id kontrolü
         customerBusinessRulesService.existsByNationalityId(updateCustomerRequest.getNationalityId()); // NationalityId kontrolü
         update(updateCustomerRequest, Customer.class);
