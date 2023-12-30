@@ -12,25 +12,13 @@ import com.nexgencarrental.nexGenCarRental.services.rules.color.ColorBusinessRul
 import org.springframework.stereotype.Service;
 
 @Service
-public class ColorManager extends BaseManager<
-        Color,
-        ColorRepository,
-        GetColorResponse,
-        GetColorListResponse,
-        AddColorRequest,
-        UpdateColorRequest
-        > implements ColorService {
+public class ColorManager extends BaseManager<Color, ColorRepository, GetColorResponse, GetColorListResponse,
+        AddColorRequest, UpdateColorRequest> implements ColorService {
     private final ColorBusinessRulesService colorBusinessRulesService;
-    public ColorManager(ColorRepository repository,
-                        ModelMapperService modelMapperService,
+    public ColorManager(ColorRepository repository, ModelMapperService modelMapperService,
                         ColorBusinessRulesService colorBusinessRulesService) {
-        super(repository,
-                modelMapperService,
-                GetColorResponse.class,
-                GetColorListResponse.class,
-                Color.class,
-                AddColorRequest.class,
-                UpdateColorRequest.class);
+        super(repository, modelMapperService, GetColorResponse.class, GetColorListResponse.class, Color.class,
+                AddColorRequest.class, UpdateColorRequest.class);
         this.colorBusinessRulesService = colorBusinessRulesService;
     }
     @Override

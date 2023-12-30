@@ -11,26 +11,14 @@ import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRul
 import org.springframework.stereotype.Service;
 
 @Service
-public class ModelManager extends BaseManager<
-        Model,
-        ModelRepository,
-        GetModelResponse,
-        GetModelListResponse,
-        AddModelRequest,
-        UpdateModelRequest
-        > implements ModelService {
+public class ModelManager extends BaseManager<Model, ModelRepository, GetModelResponse, GetModelListResponse,
+        AddModelRequest, UpdateModelRequest> implements ModelService {
     private final BrandService brandService;
     private final ModelBusinessRulesService modelBusinessRulesService;
-    public ModelManager(ModelRepository repository,
-                        ModelMapperService modelMapperService,
+    public ModelManager(ModelRepository repository, ModelMapperService modelMapperService,
                         BrandService brandService, ModelBusinessRulesService modelBusinessRulesService) {
-        super(repository,
-                modelMapperService,
-                GetModelResponse.class,
-                GetModelListResponse.class,
-                Model.class,
-                AddModelRequest.class,
-                UpdateModelRequest.class);
+        super(repository, modelMapperService, GetModelResponse.class, GetModelListResponse.class, Model.class,
+                AddModelRequest.class, UpdateModelRequest.class);
         this.brandService = brandService;
         this.modelBusinessRulesService = modelBusinessRulesService;
     }

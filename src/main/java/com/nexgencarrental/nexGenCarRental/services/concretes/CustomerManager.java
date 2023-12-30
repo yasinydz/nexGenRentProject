@@ -10,27 +10,14 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.*;
 import com.nexgencarrental.nexGenCarRental.services.rules.customer.CustomerBusinessRulesService;
 import org.springframework.stereotype.Service;
 @Service
-public class CustomerManager extends BaseManager<
-        Customer,
-        CustomerRepository,
-        GetCustomerResponse,
-        GetCustomerListResponse,
-        AddCustomerRequest,
-        UpdateCustomerRequest
-        > implements CustomerService {
+public class CustomerManager extends BaseManager<Customer, CustomerRepository, GetCustomerResponse,
+        GetCustomerListResponse, AddCustomerRequest, UpdateCustomerRequest> implements CustomerService {
     private final UserService userService;
     private final CustomerBusinessRulesService customerBusinessRulesService;
-    public CustomerManager(CustomerRepository repository,
-                           ModelMapperService modelMapperService,
-                           CustomerBusinessRulesService customerBusinessRulesService,
-                           UserService userService) {
-        super(repository,
-                modelMapperService,
-                GetCustomerResponse.class,
-                GetCustomerListResponse.class,
-                Customer.class,
-                AddCustomerRequest.class,
-                UpdateCustomerRequest.class);
+    public CustomerManager(CustomerRepository repository, ModelMapperService modelMapperService,
+                           CustomerBusinessRulesService customerBusinessRulesService, UserService userService) {
+        super(repository, modelMapperService, GetCustomerResponse.class, GetCustomerListResponse.class,
+                Customer.class, AddCustomerRequest.class, UpdateCustomerRequest.class);
         this.userService = userService;
         this.customerBusinessRulesService = customerBusinessRulesService;
     }
