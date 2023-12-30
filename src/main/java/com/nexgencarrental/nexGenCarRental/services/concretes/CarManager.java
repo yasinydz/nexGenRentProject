@@ -57,7 +57,6 @@ public class CarManager extends BaseManager <
 
     @Override
     public void customUpdate(UpdateCarRequest updateCarRequest) {
-        getById(updateCarRequest.getId()); // Car id kontrolü
         modelService.getById(updateCarRequest.getModelId()); // Model id kontrolü
         colorService.getById(updateCarRequest.getColorId()); // Color id kontrolü
         carBusinessRulesService.existsByPlate(updateCarRequest.getPlate()); // PlateName kontrolü
