@@ -40,7 +40,6 @@ public class ColorManager extends BaseManager<
     }
     @Override
     public void customUpdate(UpdateColorRequest updateColorRequest) {
-        getById(updateColorRequest.getId());
         colorBusinessRulesService.existsByName(updateColorRequest.getName());
         update(updateColorRequest, Color.class);
     }
