@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddColorRequest {
-    @Size(min = 2,message = "En az 2 harften oluşan bir renk giriniz" )
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="İlk harfi BÜYÜK sonra ki harfler KÜÇÜK olacak şekilde giriniz.(Örn:'Beyaz'")
+    @Size(min = 2,message = "Enter a color consisting of at least 2 letters" )
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Enter the first letter UPPER and the following letters SMALL.(Ex:'White'")
     private String name;
 }

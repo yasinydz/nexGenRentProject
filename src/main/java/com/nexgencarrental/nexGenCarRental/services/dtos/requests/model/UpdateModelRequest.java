@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateModelRequest {
-    @Positive(message = "Id 0'dan küçük olamaz")
+    @Positive(message = "Id cannot be less than 0")
     private int id;
 
-    @Size(min = 2,message = "Girilen model en az 2 harfli olmalıdır.")
+    @Size(min = 2,message = "The model entered must have at least 2 letters.")
     private String name;
 
-    @Positive(message = "Brand Id 0'dan küçük olamaz")
+    @Positive(message = "Brand Id cannot be less than 0")
     private int brandId;
 }

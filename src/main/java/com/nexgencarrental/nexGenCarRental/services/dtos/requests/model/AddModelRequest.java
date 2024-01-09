@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddModelRequest {
-    @Size(min = 2, message = "En az 2 harften oluşan bir model ismi giriniz")
-    @Pattern(regexp = "^[A-Za-z][A-Za-z ]{1,13}$",message="İlk harfi BÜYÜK sonra ki harfler KÜÇÜK olacak şekilde giriniz.(Örn:'Focus'")
+    @Size(min = 2, message = "Enter a model name consisting of at least 2 letters")
+    @Pattern(regexp = "^[A-Z][a-z0-9]{0,13}$", message = "Enter the first letter in CAPITAL and the following letters in SMALL. (Ex: 'Focus')")
     private String name;
 
-    @Positive(message = "Brand Id pozitif bir değer olmalıdır.")
+    @Positive(message = "Brand Id must be a positive value.")
     private int brandId;
 }

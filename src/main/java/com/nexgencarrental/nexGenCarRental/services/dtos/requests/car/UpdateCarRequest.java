@@ -11,24 +11,24 @@ import lombok.NoArgsConstructor;
 public class UpdateCarRequest {
     private int id;
 
-    @Min(value = 0,message = "sıfır veya sıfırdan büyük bir değer giriniz")
+    @Min(value = 0,message = "Enter zero or a value greater than zero")
     private double kilometer;
 
-    @Min(value = 2005, message = "2005 ve 2024 aralıgında olmalıdır")
-    @Max(value = 2024, message = "2024'den büyük olamaz")
+    @Min(value = 2005, message = "Between 2005 and 2024")
+    @Max(value = 2024, message = "No older than 2024")
     private int year;
 
 
-    @DecimalMin(value = "0.0", inclusive = true, message = "Günlük fiyat sıfırdan küçük olamaz")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Daily price cannot be less than zero")
     private double dailyPrice;
 
-    @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = "'34 ABC 456' bu formata göre giriş yapınız")
+    @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = "'34 ABC 456' enter according to this format")
     private String plate;
 
-    @PositiveOrZero(message = "Model Id 0'dan küçük olamaz.")
+    @PositiveOrZero(message = "Model Id cannot be less than 0.")
     private int modelId;
 
-    @PositiveOrZero(message = "Color Id 0'dan küçük olamaz.")
+    @PositiveOrZero(message = "Color Id cannot be less than 0.")
     private int colorId;
 
 }
