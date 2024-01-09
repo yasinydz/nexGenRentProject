@@ -3,6 +3,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,18 +28,22 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
     @Override
     public void delete(int id) {
         T entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException(entityClass.getSimpleName() +" with ID " + id + " not found."));
+                .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() +" with ID " + id + " not found."));
         repository.delete(entity);
     }
     @Override
     public G getById(int id) {
         T entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException(entityClass.getSimpleName() +" with ID " + id + " not found."));
+                .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() +" with ID " + id + " not found."));
         return modelMapperService.forResponse().map(entity, responseType);
     }
     @Override
     public List<L> getAll() {
         List<T> entities = repository.findAll();
+
+        if (entities.isEmpty())
+            throw new EntityNotFoundException("No entities found in the system.");
+
         return entities.stream()
                 .map(entity -> modelMapperService.forResponse().map(entity, listResponseType))
                 .collect(Collectors.toList());
@@ -67,7 +72,7 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         Integer entityId = (Integer) updateRequest.getClass().getMethod("getId").invoke(updateRequest);
 
         T existingEntity = repository.findById(entityId)
-                    .orElseThrow(() -> new RuntimeException(entityClass.getSimpleName() + " with ID " + entityId + " not found."));
+                    .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + entityId + " not found."));
 
         T entity = modelMapperService.forRequest().map(updateRequest, entityClass);
         if (entity instanceof Car) {
