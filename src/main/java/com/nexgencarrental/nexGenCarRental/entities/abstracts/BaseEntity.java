@@ -21,7 +21,9 @@ public abstract class BaseEntity {
 
     @PrePersist
     private void beforeAdd() {
-        createdDate = LocalDate.now();
+        if (createdDate == null) {
+            createdDate = LocalDate.now();
+        }
     }
 
     @PreUpdate

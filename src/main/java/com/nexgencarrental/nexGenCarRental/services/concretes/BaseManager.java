@@ -1,6 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BaseService;
 import jakarta.persistence.EntityNotFoundException;
@@ -75,6 +76,13 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
                     .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + entityId + " not found."));
 
         T entity = modelMapperService.forRequest().map(updateRequest, entityClass);
+
+        if (entity instanceof BaseEntity) {
+            BaseEntity existingBaseEntity = (BaseEntity) existingEntity;
+            BaseEntity updatedBaseEntity = (BaseEntity) entity;
+            updatedBaseEntity.setCreatedDate(existingBaseEntity.getCreatedDate());
+        }
+
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
             carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
