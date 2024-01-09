@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class UpdateBrandRequest {
-    @Positive(message = "Id alanı 0'dan küçük olamaz.")
+    @Positive(message = "Id field cannot be less than 0.")
     private int id;
 
-    @Size(min = 2,message = "En az 2 harften oluşan bir marka giriniz" )
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Boşluksuz ilk harfi BÜYÜK sonra ki harfler KÜÇÜK olacak şekilde giriniz.(Örn:'Ford'")
+    @Size(min = 2,message = "Enter a brand consisting of at least 2 letters" )
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Enter the first letter UPPER and the following letters SMALL without spaces.(Ex:'Ford'")
     private String name;
 }

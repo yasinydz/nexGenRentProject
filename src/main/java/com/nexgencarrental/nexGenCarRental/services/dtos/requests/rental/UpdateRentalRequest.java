@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateRentalRequest {
-    @Positive (message = "Id 0'dan küçük olamaz")
+    @Positive (message = "Id cannot be less than 0")
     private int id;
 
     private LocalDate startDate;
