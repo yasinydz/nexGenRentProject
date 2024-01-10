@@ -79,10 +79,10 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.11.0</version> <!-- Kullandığınız sürümle uyumlu bir sürümü belirtin -->
+            <version>3.8.0</version> <!-- Java 11 için örnek sürüm -->
             <configuration>
-                <source>17</source> <!-- Java sürümünü 17 veya kullanmak istediğiniz sürümle değiştirin -->
-                <target>17</target> <!-- Hedef Java sürümünü 17 veya kullanmak istediğiniz sürümle değiştirin -->
+                <source>11</source> <!-- Kullandığınız Java sürümüne göre ayarlayın -->
+                <target>11</target>
             </configuration>
         </plugin>
     </plugins>
