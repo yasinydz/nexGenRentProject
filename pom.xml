@@ -63,17 +63,18 @@
 	</dependencies>
 
 	<build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.11.0</version> <!-- Kullandığınız sürüme uygun bir versiyon -->
-            <configuration>
-                <source>1.8</source> <!-- Kullandığınız Java sürümüne uygun olarak güncelleyin -->
-                <target>1.8</target> <!-- Kullandığınız Java sürümüne uygun olarak güncelleyin -->
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
+	    <plugins>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-compiler-plugin</artifactId>
+	            <version>3.11.0</version> <!-- Kullandığınız sürüme uygun bir versiyon -->
+	            <configuration>
+	                <source>17</source> <!-- Kullandığınız Java sürümüne uygun olarak güncelleyin -->
+	                <target>17</target> <!-- Kullandığınız Java sürümüne uygun olarak güncelleyin -->
+	            </configuration>
+	        </plugin>
+	    </plugins>
+	</build>
+
 
 </project>
