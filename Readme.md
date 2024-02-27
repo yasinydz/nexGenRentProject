@@ -25,7 +25,7 @@ The contributors to this project are listed below. Thanks to everyone who contri
 
 Below is the ER (Entity-Relationship) diagram created on PostgreSQL:
 
-![ER Diagram](https://github.com/PickerWork/nexGenRentProject/raw/master/Diagram.png)
+![ER Diagram](https://github.com/HsynDmrl/nexGenRentProject/blob/main/ERD.PNG))
 
 This diagram illustrates the database structure of the project. Please click [here](https://github.com/PickerWork/nexGenRentProject/blob/master/Diagram.png) for details.
 
